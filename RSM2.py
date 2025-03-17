@@ -8,10 +8,13 @@ def create_xml(data):
 
     # Datos de la operación
     fecha_operacion = etree.SubElement(operaciones, "Fecha_de_la_operaci93n")
-    fecha_operacion.text = data["fecha_operacion"].isoformat()
+    fecha_formateada = data["fecha_operacion"].strftime("%d/%m/%Y")
+    fecha_operacion.text = fecha_formateada
 
     tipo_moneda_origen = etree.SubElement(operaciones, "Tipo_de_moneda_de_origen")
     tipo_moneda_origen.text = data["tipo_moneda_origen"]
+
+
 
     if data["tipo_moneda_origen"] == "Otro":
         tipo_moneda_extranjera = etree.SubElement(operaciones, "Tipo_de_moneda_extranjera")
