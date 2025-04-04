@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 
 # Diccionario con URLs a tus archivos .xsd en GitHub
 esquemas = {
-    "Esquema A": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_a.xsd",
+    "Esquema A": "https://github.com/AdolfoTM1/RSM2/blob/main/Anulada_v1.0.xsd",
     "Esquema B": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_b.xsd",
     "Esquema C": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_c.xsd"
 }
