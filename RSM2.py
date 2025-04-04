@@ -2,10 +2,13 @@ import streamlit as st
 import xmlschema
 import requests
 from io import BytesIO
+import logging
+
+# Configuración de logging
+logging.basicConfig(level=logging.INFO)
 
 # --- Configuración inicial ---
 st.set_page_config(page_title="Generador de XML desde XSD", layout="wide")
-
 st.title("📄 Generador de archivos XML desde esquemas XSD")
 
 # --- Lista de esquemas disponibles ---
@@ -20,28 +23,57 @@ esquema_seleccionado = st.selectbox("Selecciona un esquema XSD:", list(esquemas.
 url_xsd = esquemas[esquema_seleccionado]
 
 # --- Descargar y cargar esquema ---
+schema = None  # Inicializamos la variable
+
 try:
-    # Verifica si hay elemento raíz
-    if schema.root_element is None:
-        raise ValueError("El XSD no tiene un elemento raíz definido")
+    # Descargar el XSD
+    response = requests.get(url_xsd)
+    response.raise_for_status()  # Lanza error si la descarga falla
     
-    root_name = schema.root_element.name
+    # Verificar que no sea una página HTML
+    if b"<!DOCTYPE html>" in response.content[:100].lower():
+        st.error("❌ Error: La URL no apunta a un XSD válido. ¿Usaste la URL raw de GitHub?")
+        st.stop()
     
-    # Usa el método correcto para generar el ejemplo
-    try:
-        ejemplo = schema.example()  # Para versiones nuevas de xmlschema
-    except AttributeError:
-        ejemplo = schema.create_example()  # Para versiones antiguas
-        
-    estructura_base = schema.to_dict(ejemplo)
+    # Cargar el esquema
+    schema = xmlschema.XMLSchema(BytesIO(response.content))
+    logging.info("XSD cargado correctamente")
     
+except requests.exceptions.RequestException as e:
+    st.error(f"❌ Error de conexión: {str(e)}")
+    st.stop()
+except xmlschema.XMLSchemaException as e:
+    st.error(f"❌ Error en el esquema XSD: {str(e)}")
+    st.stop()
 except Exception as e:
-    st.error(f"Error al procesar el esquema: {str(e)}")
+    st.error(f"❌ Error inesperado: {str(e)}")
+    st.stop()
+
+# Verificar que el esquema se cargó correctamente
+if schema is None:
+    st.error("No se pudo cargar el esquema XSD")
+    st.stop()
+
+# Verificar que tenga elemento raíz
+if schema.root_element is None:
+    st.error("❌ El XSD no tiene un elemento raíz definido")
     st.stop()
 
 # --- Obtener estructura base desde el esquema ---
-root_name = schema.root_element.name
-estructura_base = schema.to_dict(schema.create_example())
+try:
+    root_name = schema.root_element.name
+    
+    # Generar ejemplo (compatible con versiones nuevas y antiguas de xmlschema)
+    try:
+        ejemplo = schema.example()  # Para versiones nuevas
+    except AttributeError:
+        ejemplo = schema.create_example()  # Para versiones antiguas
+    
+    estructura_base = schema.to_dict(ejemplo)
+    
+except Exception as e:
+    st.error(f"❌ Error al generar la estructura base: {str(e)}")
+    st.stop()
 
 # --- Crear formulario dinámico ---
 st.subheader("📝 Completa el formulario generado desde el esquema")
@@ -72,4 +104,4 @@ if submitted:
             mime="application/xml"
         )
     except Exception as e:
-        st.error(f"❌ Error al generar el archivo XML: {e}")
+        st.error(f"❌ Error al generar el archivo XML: {str(e)}")
