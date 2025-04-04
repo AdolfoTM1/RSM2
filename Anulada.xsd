@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <!-- Elemento raíz (debe estar a este nivel, no dentro de complexType) -->
+    <!-- Elemento raíz global (obligatorio) -->
     <xs:element name="Operacion">
         <xs:complexType>
             <xs:sequence>
@@ -8,6 +8,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="NumeroDeControl" type="xs:string"/>
+                            <!-- Agrega más elementos si son necesarios -->
                         </xs:sequence>
                         <xs:attribute name="Version" use="required" type="xs:string" fixed="1.0"/>
                     </xs:complexType>
