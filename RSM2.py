@@ -44,9 +44,10 @@ esquemas_disponibles = {e['nombre']: e for e in config['esquemas']}
 
 # Selección de esquema
 esquema_seleccionado = st.selectbox(
-    "Selecciona un esquema:",
-    options=list(esquemas_disponibles.keys())
-    
+    "Selecciona un esquema:",  # Texto de la etiqueta
+    options=list(esquemas_disponibles.keys()),  # Opciones del dropdown
+    key="selector_esquema"  # Clave única para el widget (opcional)
+)  # <-- Este paréntesis estaba faltando
 esquema_info = esquemas_disponibles[esquema_seleccionado]
 
 # Modo de carga
