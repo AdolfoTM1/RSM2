@@ -3,7 +3,7 @@
 	<xs:element name="Operacion">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="DatosOperacionAnuladaReporte">
+				<xs:element name="Datosoperacionanuladareporte">
 					<xs:complexType>
 						<xs:sequence>							
 							<xs:element name="NumeroDeControl" type="xs:string" />							
