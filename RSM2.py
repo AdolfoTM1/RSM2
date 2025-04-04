@@ -1,49 +1,51 @@
 import streamlit as st
-import xml.etree.ElementTree as ET
+import xmlschema
 import requests
 from io import BytesIO
+import xml.etree.ElementTree as ET
 
-# Configura la app
-st.set_page_config(page_title="Editor XML", layout="wide")
-
-# Menú de esquemas
+# Diccionario con URLs a tus archivos .xsd en GitHub
 esquemas = {
-    "Esquema A": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_a.xml",
-    "Esquema B": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_b.xml",
-    "Esquema C": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_c.xml",
-    "Esquema D": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_d.xml",
-    "Esquema E": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_e.xml"
+    "Esquema A": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_a.xsd",
+    "Esquema B": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_b.xsd",
+    "Esquema C": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_c.xsd"
 }
 
-st.title("Editor de Archivos XML")
+st.title("Generador XML basado en XSD")
 
-esquema_seleccionado = st.selectbox("Selecciona un esquema XML", list(esquemas.keys()))
+esquema_seleccionado = st.selectbox("Selecciona un esquema XSD", list(esquemas.keys()))
+url_xsd = esquemas[esquema_seleccionado]
 
-# Descargar y parsear el XML
-url_xml = esquemas[esquema_seleccionado]
-response = requests.get(url_xml)
-tree = ET.parse(BytesIO(response.content))
-root = tree.getroot()
+# Descargar el esquema XSD desde GitHub
+response = requests.get(url_xsd)
+schema = xmlschema.XMLSchema(BytesIO(response.content))
 
-# Mostrar formulario dinámico
-st.subheader("Formulario generado desde el XML")
+# Generar estructura base
+st.subheader("Formulario generado a partir del esquema")
 
-nuevos_valores = {}
-for child in root:
-    valor = st.text_input(f"{child.tag}", value=child.text or "")
-    nuevos_valores[child.tag] = valor
+# Vamos a generar el formulario desde el primer elemento definido
+root_element = schema.elements[schema.root_element.name]
+default_data = schema.to_dict(schema.create_example())
 
-# Botón para generar nuevo XML
-if st.button("Generar nuevo XML"):
-    for child in root:
-        if child.tag in nuevos_valores:
-            child.text = nuevos_valores[child.tag]
+user_data = {}
 
-    new_xml = BytesIO()
-    tree.write(new_xml, encoding="utf-8", xml_declaration=True)
-    st.download_button(
-        label="Descargar archivo XML",
-        data=new_xml.getvalue(),
-        file_name="nuevo_archivo.xml",
-        mime="application/xml"
-    )
+# Mostrar inputs dinámicamente
+for key, value in default_data.items():
+    user_input = st.text_input(key, str(value) if value is not None else "")
+    user_data[key] = user_input
+
+# Crear XML al presionar botón
+if st.button("Generar XML"):
+    # Validar y generar
+    try:
+        xml_content = schema.encode(user_data, path=schema.root_element.name)
+        st.success("XML generado exitosamente ✅")
+
+        st.download_button(
+            label="Descargar archivo XML",
+            data=xml_content,
+            file_name="archivo_generado.xml",
+            mime="application/xml"
+        )
+    except Exception as e:
+        st.error(f"Ocurrió un error al generar el XML: {e}")
