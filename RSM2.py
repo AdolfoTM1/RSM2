@@ -10,7 +10,7 @@ st.title("📄 Generador de archivos XML desde esquemas XSD")
 
 # --- Lista de esquemas disponibles ---
 esquemas = {
-    "Esquema A": "https://github.com/AdolfoTM1/RSM2/blob/main/Anulada.xsd",
+    "Esquema A":  "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/Anulada.xsd",
     "Esquema B": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_b.xsd",
     "Esquema C": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/esquema_c.xsd"
 }
