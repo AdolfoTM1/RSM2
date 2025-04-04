@@ -21,11 +21,22 @@ url_xsd = esquemas[esquema_seleccionado]
 
 # --- Descargar y cargar esquema ---
 try:
-    response = requests.get(url_xsd)
-    response.raise_for_status()
-    schema = xmlschema.XMLSchema(BytesIO(response.content))
+    # Verifica si hay elemento raíz
+    if schema.root_element is None:
+        raise ValueError("El XSD no tiene un elemento raíz definido")
+    
+    root_name = schema.root_element.name
+    
+    # Usa el método correcto para generar el ejemplo
+    try:
+        ejemplo = schema.example()  # Para versiones nuevas de xmlschema
+    except AttributeError:
+        ejemplo = schema.create_example()  # Para versiones antiguas
+        
+    estructura_base = schema.to_dict(ejemplo)
+    
 except Exception as e:
-    st.error(f"❌ Error al cargar el XSD: {e}")
+    st.error(f"Error al procesar el esquema: {str(e)}")
     st.stop()
 
 # --- Obtener estructura base desde el esquema ---
