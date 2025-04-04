@@ -3,12 +3,15 @@
         {
             "nombre": "Anulación",
             "archivo": "schemas/anulacion.xsd",
-            "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/Anulada.xsd"
+            "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/Anulada.xsd",
+            "descripcion": "Esquema para operaciones de anulación"
         },
         {
-            "nombre": "Otro Esquema",
-            "archivo": "schemas/otros/otro_esquema.xsd",
-            "url": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/schemas/otros/otro_esquema.xsd"
+            "nombre": "Facturación",
+            "archivo": "schemas/facturacion.xsd",
+            "url": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/schemas/facturacion.xsd",
+            "descripcion": "Esquema para facturas electrónicas"
         }
     ]
 }
+
