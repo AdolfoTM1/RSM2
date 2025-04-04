@@ -3,7 +3,7 @@
         {
             "nombre": "Anulación",
             "archivo": "schemas/anulacion.xsd",
-            "url": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/schemas/anulacion.xsd"
+            "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/Anulada.xsd"
         },
         {
             "nombre": "Otro Esquema",
