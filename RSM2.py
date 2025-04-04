@@ -78,7 +78,7 @@ try:
             elif isinstance(valor, bool):
                 user_data[campo] = st.checkbox(campo, value=valor)
             else:
-                user_data[campo] = st.text_input(campo, value=str(valor) if valor else ""
+                user_data[campo] = st.text_input(campo, value=str(valor) if valor else "")
         
         if st.form_submit_button("Generar XML"):
             try:
