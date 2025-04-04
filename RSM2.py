@@ -1,106 +1,115 @@
 import streamlit as st
 import requests
-import json
-import os
-from io import BytesIO
 import xmlschema
+from io import BytesIO
+import json
 from pathlib import Path
 
-# --- Configuración ---
-CONFIG_FILE = "config/esquemas.json"
-SCHEMAS_DIR = "schemas"
+# Configuración de la aplicación
+st.set_page_config(page_title="Generador XML RSM2", layout="wide")
+st.title("📋 Generador de XML para RSM2")
 
-# --- Funciones de carga ---
+# --- Carga de Esquemas ---
 def cargar_configuracion():
-    """Carga el archivo de configuración de esquemas"""
+    """Carga la configuración de esquemas desde un archivo JSON"""
     try:
-        with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+        with open('config/esquemas.json', 'r', encoding='utf-8') as f:
             return json.load(f)
     except Exception as e:
         st.error(f"❌ Error al cargar configuración: {str(e)}")
         st.stop()
 
-def cargar_xsd(ruta_o_url):
-    """Carga un XSD desde archivo local o URL"""
+def cargar_xsd(ruta_xsd):
+    """Carga un esquema XSD desde archivo local o URL"""
     try:
-        if ruta_o_url.startswith('http'):
-            response = requests.get(ruta_o_url, timeout=10)
+        if ruta_xsd.startswith('http'):
+            response = requests.get(ruta_xsd, timeout=10)
             response.raise_for_status()
             return xmlschema.XMLSchema(BytesIO(response.content))
         else:
-            ruta_completa = os.path.join(SCHEMAS_DIR, ruta_o_url)
-            return xmlschema.XMLSchema(ruta_completa)
+            return xmlschema.XMLSchema(ruta_xsd)
     except Exception as e:
         st.error(f"❌ Error al cargar XSD: {str(e)}")
         st.stop()
 
-# --- Interfaz ---
-st.set_page_config(page_title="Gestor de Esquemas XML", layout="wide")
-st.title("📁 Generador XML con Esquemas Externos")
+# --- Interfaz de Usuario ---
+def main():
+    # Cargar configuración
+    config = cargar_configuracion()
+    esquemas = {e['nombre']: e for e in config['esquemas']}
 
-# Cargar configuración
-config = cargar_configuracion()
-esquemas_disponibles = {e['nombre']: e for e in config['esquemas']}
+    # Selección de esquema
+    col1, col2 = st.columns(2)
+    with col1:
+        esquema_seleccionado = st.selectbox(
+            "Seleccione el tipo de operación:",
+            options=list(esquemas.keys())
+        )
 
-# Selección de esquema
-esquema_seleccionado = st.selectbox(
-    "Selecciona un esquema:",  # Texto de la etiqueta
-    options=list(esquemas_disponibles.keys()),  # Opciones del dropdown
-    key="selector_esquema"  # Clave única para el widget (opcional)
-)  # <-- Este paréntesis estaba faltando
-esquema_info = esquemas_disponibles[esquema_seleccionado]
+    with col2:
+        modo_carga = st.radio(
+            "Fuente del esquema:",
+            ["Desde URL", "Desde archivo local"],
+            horizontal=True
+        )
 
-# Modo de carga
-modo_carga = st.radio(
-    "Fuente del esquema:",
-    ["Desde URL", "Desde archivo local"],
-    horizontal=True)
-
-# Cargar XSD
-if st.button("Cargar Esquema"):
-    with st.spinner(f"Cargando {esquema_seleccionado}..."):
-        if modo_carga == "Desde URL":
-            schema = cargar_xsd(esquema_info['url'])
-        else:
-            schema = cargar_xsd(esquema_info['archivo'])
-        
-        st.session_state.schema = schema
-        st.success(f"✅ {esquema_seleccionado} cargado correctamente")
-
-# Generador de XML
-if 'schema' in st.session_state:
-    schema = st.session_state.schema
-    
-    st.divider()
-    st.subheader("Generar XML")
-    
-    # Obtener estructura del esquema
-    ejemplo = schema.example() if hasattr(schema, 'example') else schema.create_example()
-    estructura = schema.to_dict(ejemplo)
-    
-    # Generar formulario dinámico
-    with st.form("generador_xml"):
-        datos = {}
-        for campo, valor in estructura.items():
-            if isinstance(valor, bool):
-                datos[campo] = st.checkbox(campo, value=valor)
-            elif isinstance(valor, (int, float)):
-                datos[campo] = st.number_input(campo, value=valor)
-            else:
-                datos[campo] = st.text_input(campo, value=str(valor) if valor else "")
-        
-        if st.form_submit_button("Generar XML"):
+    # Cargar el esquema seleccionado
+    if st.button("Cargar Esquema"):
+        with st.spinner(f"Cargando {esquema_seleccionado}..."):
             try:
-                xml_generado = schema.encode(datos, path=schema.root_element.name)
+                if modo_carga == "Desde URL":
+                    schema = cargar_xsd(esquemas[esquema_seleccionado]['url'])
+                else:
+                    schema = cargar_xsd(esquemas[esquema_seleccionado]['archivo'])
                 
-                st.success("✅ XML generado correctamente")
-                st.download_button(
-                    label="⬇️ Descargar XML",
-                    data=xml_generado,
-                    file_name=f"{esquema_seleccionado.lower().replace(' ', '_')}.xml",
-                    mime="application/xml"
-                )
-                
-                st.code(xml_generado.decode('utf-8'), language='xml')
+                st.session_state.schema = schema
+                st.success(f"✅ {esquema_seleccionado} cargado correctamente")
             except Exception as e:
-                st.error(f"❌ Error al generar XML: {str(e)}")
+                st.error(f"❌ Error: {str(e)}")
+
+    # Generador de XML
+    if 'schema' in st.session_state:
+        schema = st.session_state.schema
+        st.divider()
+        st.subheader("Datos de la Operación")
+
+        with st.form("formulario_xml"):
+            # Campos dinámicos basados en el XSD
+            datos = {}
+            
+            # Ejemplo para el esquema de anulación
+            if "Anulación" in esquema_seleccionado:
+                datos['NumeroDeControl'] = st.text_input("Número de Control", value="")
+                datos['Version'] = "1.0"  # Valor fijo según XSD
+            
+            # Puedes agregar más condiciones para otros esquemas aquí
+            
+            if st.form_submit_button("Generar XML"):
+                try:
+                    # Construcción del XML
+                    xml_content = f"""<?xml version="1.0"?>
+<Operacion>
+    <Datosoperacionanuladareporte Version="{datos['Version']}">
+        <NumeroDeControl>{datos['NumeroDeControl']}</NumeroDeControl>
+    </Datosoperacionanuladareporte>
+</Operacion>"""
+                    
+                    # Validación contra el esquema
+                    if schema.is_valid(BytesIO(xml_content.encode())):
+                        st.success("✅ XML generado y validado correctamente")
+                        
+                        # Mostrar y permitir descargar el XML
+                        st.code(xml_content, language='xml')
+                        st.download_button(
+                            label="⬇️ Descargar XML",
+                            data=xml_content,
+                            file_name=f"{esquema_seleccionado.lower().replace(' ', '_')}.xml",
+                            mime="application/xml"
+                        )
+                    else:
+                        st.error("❌ El XML generado no es válido según el esquema")
+                except Exception as e:
+                    st.error(f"❌ Error al generar XML: {str(e)}")
+
+if __name__ == "__main__":
+    main()
