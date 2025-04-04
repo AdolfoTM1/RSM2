@@ -1,0 +1,14 @@
+{
+    "esquemas": [
+        {
+            "nombre": "Anulación",
+            "archivo": "schemas/anulacion.xsd",
+            "url": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/schemas/anulacion.xsd"
+        },
+        {
+            "nombre": "Otro Esquema",
+            "archivo": "schemas/otros/otro_esquema.xsd",
+            "url": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/schemas/otros/otro_esquema.xsd"
+        }
+    ]
+}
