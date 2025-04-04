@@ -1,18 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <!-- Elemento raíz global (obligatorio) -->
+    <!-- Tipo complejo separado -->
+    <xs:complexType name="TipoDatos">
+        <xs:sequence>
+            <xs:element name="NumeroDeControl" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="Version" use="required" type="xs:string" fixed="1.0"/>
+    </xs:complexType>
+    
+    <!-- Elemento raíz que usa el tipo complejo -->
     <xs:element name="Operacion">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Datosoperacionanuladareporte">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="NumeroDeControl" type="xs:string"/>
-                            <!-- Agrega más elementos si son necesarios -->
-                        </xs:sequence>
-                        <xs:attribute name="Version" use="required" type="xs:string" fixed="1.0"/>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element name="Datosoperacionanuladareporte" type="TipoDatos"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
