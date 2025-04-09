@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" version="1.0">
+	<xs:element name="Operacion">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Operaciones_de_compra_yX85Xo_venta_de_bienes_inmuebles">
+					<xs:annotation>
+						<!--<xs:documentation source="funcion">LuegoGuardado?ValidarMontoFormaPago|FORMAS_DE_PAGO</xs:documentation>-->
+						<!--<xs:documentation source="funcion">ValidarPorcentajeTablaColumnaPorCampo|IDENTIFICACI98N_DEL_COMPRADOR_Y_VENDEDOR,Rol_en_la_Operaci93n88CompradorVendedor,Comprador</xs:documentation>
+						<xs:documentation source="funcion">ValidarPorcentajeTablaColumnaPorCampo|IDENTIFICACI98N_DEL_COMPRADOR_Y_VENDEDOR,Rol_en_la_Operaci93n88CompradorVendedor,Vendedor</xs:documentation>-->
+						<xs:documentation source="funcion">ValidarFechaGenerica|Fecha_de_la_Operaci93n</xs:documentation>
+						<xs:documentation source="funcion">ValidarPorcentajeTablaColumnaCompradorVendedor|IDENTIFICACI98N_DEL_COMPRADOR_Y_VENDEDOR</xs:documentation>
+						  <xs:documentation source="funcion">ValidarCompradorVendedor|IDENTIFICACI98N_DEL_COMPRADOR_Y_VENDEDOR</xs:documentation>
+							<xs:documentation source="funcion">ValidarMatcheoVinculadosPersonaJuridica|IDENTIFICACI98N_DEL_COMPRADOR_Y_VENDEDOR,IDENTIFICACI98N_DE_SUJETOS_VINCULADOS</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+						  <!--<xs:element name="Datos_de_la_operaci93n" minOccurs="1" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation source="funcion">ValidarFechaGenerica|Fecha_de_la_Operaci93n</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+										<xs:sequence>-->
+											<xs:element name="Fecha_de_la_operaci93n" type="xs:dateTime"/>
+											<xs:element name="Tipo_de_moneda_de_origen" >
+													<xs:annotation>
+															<xs:documentation source="grupocondicional">Tipo_de_moneda_de_origen</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+															<xs:restriction base="xs:string">
+																	<xs:enumeration value="Elegir..." />
+																	<xs:enumeration value="Peso Argentino">
+																			<xs:annotation>
+																					<xs:documentation source="condicional">condicional1</xs:documentation>
+																			</xs:annotation>
+																	</xs:enumeration>
+																	<xs:enumeration value="Otro">
+																			<xs:annotation>
+																					<xs:documentation source="condicional">condicional2</xs:documentation>
+																			</xs:annotation>
+																	</xs:enumeration>
+															</xs:restriction>
+													</xs:simpleType>
+											</xs:element>
+											<xs:element name="Tipo_de_moneda_extranjera" type="xs:string" nillable="true" minOccurs="0" >
+													<xs:annotation>
+															<xs:documentation source="OrigenExterno">TipoMonedaNoPeso</xs:documentation>
+															<xs:documentation source="grupocondicional">Tipo_de_moneda_de_origen</xs:documentation>
+															<xs:documentation source="condicional">condicional2</xs:documentation>
+															<xs:documentation source="obligatorio" />
+													</xs:annotation>
+											</xs:element>
+											<!--<xs:element name="Monto_total_de_la_operaci93n_en_moneda_de_origen88Peso" type="xs:string" nillable="true" minOccurs="0" >
+												<xs:annotation>
+													<xs:documentation source="grupocondicional">Tipo_de_moneda_de_origen</xs:documentation>
+													<xs:documentation source="condicional">condicional1</xs:documentation>
+													<xs:documentation source="obligatorio" />
+  											</xs:annotation>
+ 											</xs:element>
+											<xs:element name="Monto_total_de_la_operaci93n_en_moneda_de_origen88NoPeso" type="xs:string" nillable="true" minOccurs="0" >
+													<xs:annotation>
+															<xs:documentation source="grupocondicional">Tipo_de_moneda_de_origen</xs:documentation>
+															<xs:documentation source="condicional">condicional2</xs:documentation>
+															<xs:documentation source="obligatorio" />
+													</xs:annotation>
+											</xs:element>-->
+											<xs:element name="Monto_total_de_la_operaci93n_equivalente_en_Pesos" type="xs:long" nillable="true" minOccurs="0" >
+												<xs:annotation>
+														<xs:documentation source="grupocondicional">Tipo_de_moneda_de_origen</xs:documentation>
+														<xs:documentation source="condicional">condicional2</xs:documentation>
+														<xs:documentation source="obligatorio" />
+												</xs:annotation>
+											</xs:element>
+										  <xs:element name="Monto_total_de_la_operaci93n_en_moneda_de_origen" type="xs:long" />
+      								<xs:element name="Nomenclatura_catastral_o_matr92cula_del_inmueble_transferido" type="xs:string"/>
+											<xs:element name="Provincia_del_inmueble" nillable="true" minOccurs ="0">
+												<xs:annotation>
+													<xs:documentation source="obligatorio" />
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="CABA"/>
+														<xs:enumeration value="Buenos Aires"/>
+														<xs:enumeration value="Catamarca"/>
+														<xs:enumeration value="Córdoba"/>
+														<xs:enumeration value="Corrientes"/>
+														<xs:enumeration value="Chaco"/>
+														<xs:enumeration value="Chubut"/>
+														<xs:enumeration value="Entre Ríos"/>
+														<xs:enumeration value="Formosa"/>
+														<xs:enumeration value="Jujuy"/>
+														<xs:enumeration value="La Pampa"/>
+														<xs:enumeration value="La Rioja"/>
+														<xs:enumeration value="Mendoza"/>
+														<xs:enumeration value="Misiones"/>
+														<xs:enumeration value="Neuquén"/>
+														<xs:enumeration value="Río Negro"/>
+														<xs:enumeration value="Salta"/>
+														<xs:enumeration value="San Juan"/>
+														<xs:enumeration value="San Luis"/>
+														<xs:enumeration value="Santa Cruz"/>
+														<xs:enumeration value="Santa Fé"/>
+														<xs:enumeration value="Santiago Del Estero"/>
+														<xs:enumeration value="Tucumán"/>
+														<xs:enumeration value="Tierra del Fuego"/>
+													</xs:restriction>
+												</xs:simpleType>
+										</xs:element>
+										<xs:element name="Localidad_del_inmueble" type="xs:string"/>
+										<xs:element name="Calle_del_inmueble" type="xs:string"/>
+										<xs:element name="N94mero_del_inmueble" type="xs:string">
+											<xs:annotation>
+												<xs:documentation source="ValidationExpression">(^\d+$|^[Ss]\/[Nn]$)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Piso_del_inmueble" type="xs:string" nillable="true" minOccurs="0" />
+										<xs:element name="Departamento_del_inmueble" type="xs:string" nillable="true" minOccurs="0" />
+										<xs:element name="C93digo_postal_del_inmueble" type="xs:string" nillable="true" minOccurs="0" />
+									<!--</xs:sequence>
+								</xs:complexType>
+							</xs:element>-->
+							<xs:element name="FORMAS_DE_PAGO"  minOccurs="1" maxOccurs="unbounded">
+								<xs:annotation>
+									<!--<xs:documentation source="funcion">ValidarFechaGenerica|Fecha_de_Operaci93n</xs:documentation>-->
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Forma_de_pago">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Forma_de_pago</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Efectivo">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional1</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Transferencia">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional1</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Cheque">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional1</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Activo Virtual">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional2</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Otra">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional3</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+
+										<xs:element name="Tipo_de_activo_virtual" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Forma_de_pago</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+
+										<xs:element name="Otra" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Forma_de_pago</xs:documentation>
+												<xs:documentation source="condicional">condicional3</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<!--<xs:element name="Tipo_de_moneda_de_origen_del_pago" type="xs:string" >
+											<xs:annotation>
+												<xs:documentation source="OrigenExterno">TipoMoneda</xs:documentation>
+											</xs:annotation>
+										</xs:element>-->
+										<xs:element name="Tipo_de_moneda_de_origen_del_pago" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_moneda_de_origen_del_pago</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Elegir..." />
+													<xs:enumeration value="Peso Argentino">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional1</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Otro">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional2</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Tipo_de_moneda_extranjera_de_origen_del_pago" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="OrigenExterno">TipoMonedaNoPeso</xs:documentation>
+												<xs:documentation source="grupocondicional">Tipo_de_moneda_de_origen_del_pago</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Monto_Pagado_de_la_operaci93n_equivalente_en_Pesos" type="xs:long" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_moneda_de_origen_del_pago</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Monto_Pagado_de_la_operaci93n_en_moneda_de_origen" type="xs:long"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						                  		
+								<xs:element name="IDENTIFICACI98N_DEL_COMPRADOR_Y_VENDEDOR" minOccurs="1" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation source="funcion">ValidarFechaGenerica|Tipo_de_Persona88CompradorVendedor-Fecha_de_nacimiento88PersonaHumana</xs:documentation>
+									<xs:documentation source="funcion">ValidarFechaGenerica|Tipo_de_Persona88CompradorVendedor-Fecha_de_nacimiento88PersonaHumanaExtranjera</xs:documentation>						
+									<xs:documentation source="funcion">ValidarCUITPersonaHumanaFormulario|Tipo_de_Persona88CompradorVendedor-N94mero_de_CUITX85XCUIL88Persona_Humana</xs:documentation>
+									<xs:documentation source="funcion">ValidarCUITPersonaJuridicaFormulario|Tipo_de_Persona88CompradorVendedor-N94mero_de_CUITX85XCUIL88Persona_Juridica</xs:documentation>
+									<xs:documentation source="funcion">ValidarCDI|Tipo_de_Persona88CompradorVendedor-N94mero_de_CDI88Persona_Humana</xs:documentation>
+									<xs:documentation source="funcion">ValidarCDI|Tipo_de_Persona88CompradorVendedor-N94mero_de_CDI88Persona_Juridica</xs:documentation>										
+										
+									<!--<xs:documentation source="funcion">ValidarCUITPersonaHumanaFormulario|N94mero_de_CUITX85XCUIL88Persona_Humana</xs:documentation>
+									<xs:documentation source="funcion">ValidarCUITPersonaJuridicaFormulario|N94mero_de_CUITX85XCUIL88Persona_Juridica</xs:documentation>-->
+					<!--				<xs:documentation source="funcion">ValidarDOC|Tipo_de_Documento88Persona_Humana,N94mero_de_Documento88Persona_Humana</xs:documentation> -->
+									<xs:documentation source="funcion">ValidarDOC|Tipo_de_Persona88CompradorVendedor-Tipo_de_Documento88PersonaHumana,Tipo_de_Persona88CompradorVendedor-N94mero_de_Documento88PersonaHumana</xs:documentation>
+									<xs:documentation source="funcion">ValidarDOC|Tipo_de_Persona88CompradorVendedor-Tipo_de_Documento88PersonaHumanaExtranjera,Tipo_de_Persona88CompradorVendedor-N94mero_de_Documento88PersonaHumanaExtranjera</xs:documentation>
+
+								</xs:annotation>					
+								<xs:complexType>
+									<xs:choice minOccurs="0" maxOccurs="unbounded">
+									<!--<xs:sequence minOccurs="1" maxOccurs="unbounded">-->
+										  <xs:element name="ID88Persona" type="xs:int" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" >
+													<xs:annotation>
+															<xs:documentation source="Visible">false</xs:documentation>
+													</xs:annotation>
+											</xs:element>
+											<xs:element name="Rol_en_la_Operaci93n88CompradorVendedor">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Comprador"/>
+													<xs:enumeration value="Vendedor"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Tipo_de_Persona88CompradorVendedor" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Persona Humana">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional1</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Persona Humana Extranjera">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional2</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Persona Jurídica">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional3</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Persona Jurídica Extranjera">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional4</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+
+										<xs:element name="Denominaci93n88Persona_Juridica" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional3</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Denominaci93n88Persona_Juridica_extranjera" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional4</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="N94mero_de_CUITX85XCUIL88Persona_Humana" type="xs:string" nillable="true" minOccurs="0" >
+												<xs:annotation>
+														<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+														<xs:documentation source="condicional">condicional1</xs:documentation>
+														<xs:documentation source="obligatorio" />
+												</xs:annotation>
+										</xs:element>
+										<xs:element name="N94mero_de_CUITX85XCUIL88Persona_Juridica" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional3</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="N94mero_de_CDI88Persona_Humana" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<!--<xs:documentation source="obligatorio" />-->
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="N94mero_de_CDI88Persona_Juridica" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional4</xs:documentation>
+												<!--<xs:documentation source="obligatorio" />-->
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Tipo_Identificador_Tributario88Persona_Juridica_Extranjera" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional4</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Nro_Identificador_Tributario88Persona_Juridica_Extranjera" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional4</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Apellidos88PersonaHumana" type ="xs:string"  nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+												<xs:documentation source="ValidationExpression">(^[a-zA-ZÀ-ÿ'’\s]+$)</xs:documentation>
+											</xs:annotation>
+										</xs:element>	
+										<xs:element name="Apellidos88PersonaHumanaExtranjera" type ="xs:string"  nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+												<xs:documentation source="ValidationExpression">(^[a-zA-ZÀ-ÿ'’\s]+$)</xs:documentation>
+											</xs:annotation>
+										</xs:element>								
+										<xs:element name="Nombres88PersonaHumana" type ="xs:string"  nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+												<xs:documentation source="ValidationExpression">(^[a-zA-ZÀ-ÿ'’\s]+$)</xs:documentation>
+											</xs:annotation>
+										</xs:element>	
+										<xs:element name="Nombres88PersonaHumanaExtranjera" type ="xs:string"  nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+												<xs:documentation source="ValidationExpression">(^[a-zA-ZÀ-ÿ'’\s]+$)</xs:documentation>
+											</xs:annotation>
+										</xs:element>			
+										<xs:element name="Tipo_de_Documento88PersonaHumana" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Documento Nacional de Identidad"/>
+													<xs:enumeration value="Libreta de Enrolamiento"/>
+													<xs:enumeration value="Libreta Cívica"/>
+													<xs:enumeration value="Cédula Mercosur"/>
+													<xs:enumeration value="Pasaporte"/>
+													<xs:enumeration value="Pasaporte EXT"/>
+													<xs:enumeration value="Documento EXT"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>							
+										<xs:element name="Tipo_de_Documento88PersonaHumanaExtranjera" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Documento Nacional de Identidad"/>
+													<xs:enumeration value="Libreta de Enrolamiento"/>
+													<xs:enumeration value="Libreta Cívica"/>
+													<xs:enumeration value="Cédula Mercosur"/>
+													<xs:enumeration value="Pasaporte"/>
+													<xs:enumeration value="Pasaporte EXT"/>
+													<xs:enumeration value="Documento EXT"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>									
+										<xs:element name="N94mero_de_Documento88PersonaHumana" type ="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>	
+										<xs:element name="N94mero_de_Documento88PersonaHumanaExtranjera" type ="xs:string"  nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>												
+										<xs:element name="Nacionalidad88PersonaHumana" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="OrigenExterno">Paises</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Nacionalidad88PersonaHumanaExtranjera" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="OrigenExterno">Paises</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>							
+										<xs:element name="Fecha_de_nacimiento88PersonaHumana" type ="xs:dateTime" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>							
+										<xs:element name="Fecha_de_nacimiento88PersonaHumanaExtranjera" type ="xs:dateTime" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Es_PEP88PersonaHumana" type ="xs:boolean" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>		
+										<xs:element name="Es_PEP88PersonaHumanaExtranjera" type ="xs:boolean" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>	
+
+										<xs:element name="Porcentaje88CompradorVendedor"   type="xs:string" >
+											<xs:annotation>
+												<xs:documentation source="ValidationExpression">^(100(\.00)?|(\d{1,2}(\,\d{1,2})?))$</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+							
+										<!--<xs:element name="Porcentaje"/>
+										<xs:element name="Domicilio"/>-->	
+									
+										<xs:element name="Pa92s88CompradorVendedor">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Pa92s88CompradorVendedor</xs:documentation>
+												<!--<xs:documentation source="OrigenExterno">Pa92ses</xs:documentation>-->
+												<!--<xs:documentation source="obligatorio" />-->
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Elegir..." />
+													<xs:enumeration value="Argentina">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional1</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Otro">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional2</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Provincia88CompradorVendedor" nillable="true" minOccurs ="0">
+											<xs:annotation>
+												<!--<xs:documentation source="ListaRelacionada">Origen_Provincia</xs:documentation>-->
+												<xs:documentation source="grupocondicional">Pa92s88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+														<xs:enumeration value="CABA"/>
+														<xs:enumeration value="Buenos Aires"/>
+														<xs:enumeration value="Catamarca"/>
+														<xs:enumeration value="Córdoba"/>
+														<xs:enumeration value="Corrientes"/>
+														<xs:enumeration value="Chaco"/>
+														<xs:enumeration value="Chubut"/>
+														<xs:enumeration value="Entre Ríos"/>
+														<xs:enumeration value="Formosa"/>
+														<xs:enumeration value="Jujuy"/>
+														<xs:enumeration value="La Pampa"/>
+														<xs:enumeration value="La Rioja"/>
+														<xs:enumeration value="Mendoza"/>
+														<xs:enumeration value="Misiones"/>
+														<xs:enumeration value="Neuquén"/>
+														<xs:enumeration value="Río Negro"/>
+														<xs:enumeration value="Salta"/>
+														<xs:enumeration value="San Juan"/>
+														<xs:enumeration value="San Luis"/>
+														<xs:enumeration value="Santa Cruz"/>
+														<xs:enumeration value="Santa Fé"/>
+														<xs:enumeration value="Santiago Del Estero"/>
+														<xs:enumeration value="Tucumán"/>
+														<xs:enumeration value="Tierra del Fuego"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Otro_pa92s88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="OrigenExterno">PaisesExt</xs:documentation>
+												<xs:documentation source="grupocondicional">Pa92s88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ProvinciaX85XEstado88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Pa92s88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Localidad88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Pa92s88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>		
+										<xs:element name="LocalidadX85XCiudad88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Pa92s88CompradorVendedor</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>	
+										<xs:element name="Calle88CompradorVendedor" type="xs:string" />
+										<xs:element name="N94mero88CompradorVendedor" type="xs:string">
+											<xs:annotation>
+												<xs:documentation source="ValidationExpression">(^\d+$|^[Ss]\/[Nn]$)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Piso88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0"/>
+										<xs:element name="Departamento88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0"/>
+										<xs:element name="C93digo_Postal88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0"/>
+										<xs:element name="C93digo_de_90rea_telef93nico88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="ValidationExpression">(^\d+$)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Tel91fono88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="ValidationExpression">(^\d+$)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Direcci93n_de_correo_electr93nico88CompradorVendedor" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="email" />
+											</xs:annotation>
+										</xs:element>
+									<!--</xs:sequence>-->
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="IDENTIFICACI98N_DE_SUJETOS_VINCULADOS" minOccurs="0" maxOccurs="unbounded">
+									<xs:annotation>
+									<xs:documentation source="funcion">ValidarCUITPersonaHumanaFormulario|Tipo_de_Persona88SujetosVinculados-N94mero_de_CUITX85XCUIL88SujetosVinculados</xs:documentation>
+									<xs:documentation source="funcion">ValidarCDI|Tipo_de_Persona88SujetosVinculados-N94mero_de_CDI88SujetosVinculados</xs:documentation>
+									<xs:documentation source="funcion">ValidarDOC|Tipo_de_Documento88SujetosVinculados,N94mero_de_Documento88SujetosVinculados</xs:documentation>						
+								</xs:annotation>					
+								
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Rol_en_la_Operaci93n88SujetosVinculados">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Apoderado"/>
+													<xs:enumeration value="Tutor"/>
+													<xs:enumeration value="Curador"/>
+													<xs:enumeration value="Representante"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Tipo_de_Persona88SujetosVinculados">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88SujetosVinculados</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Persona Humana">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional1</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="Persona Humana Extranjera">
+														<xs:annotation>
+															<xs:documentation source="condicional">condicional2</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="N94mero_de_CUITX85XCUIL88SujetosVinculados" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88SujetosVinculados</xs:documentation>
+												<xs:documentation source="condicional">condicional1</xs:documentation>
+												<xs:documentation source="obligatorio" />
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="N94mero_de_CDI88SujetosVinculados" type="xs:string" nillable="true" minOccurs="0" >
+											<xs:annotation>
+												<xs:documentation source="grupocondicional">Tipo_de_Persona88SujetosVinculados</xs:documentation>
+												<xs:documentation source="condicional">condicional2</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Apellidos88SujetosVinculados" type="xs:string">
+											<xs:annotation>
+												<xs:documentation source="ValidationExpression">(^[a-zA-ZÀ-ÿ'’\s]+$)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+
+										<xs:element name="Nombres88SujetosVinculados" type="xs:string">
+											<xs:annotation>
+													<xs:documentation source="ValidationExpression">(^[a-zA-ZÀ-ÿ'’\s]+$)</xs:documentation>
+											</xs:annotation>
+									  </xs:element>
+											
+										<xs:element name="Tipo_de_Documento88SujetosVinculados">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Documento Nacional de Identidad"/>
+													<xs:enumeration value="Libreta de Enrolamiento"/>
+													<xs:enumeration value="Libreta Cívica"/>
+													<xs:enumeration value="Cédula Mercosur"/>
+													<xs:enumeration value="Pasaporte"/>
+													<xs:enumeration value="Pasaporte EXT"/>
+													<xs:enumeration value="Documento EXT"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>							
+							
+										<xs:element name="N94mero_de_Documento88SujetosVinculados" type="xs:string"/>
+										<xs:element name="Es_PEP88SujetosVinculados" type="xs:boolean"/>
+										<xs:element name="CompradorX85XVendedor_vinculado88SujetosVinculados" type="xs:string">
+											<xs:annotation>
+												<xs:documentation source="ListaSegunPersonaVincConcatIDNombre">IDENTIFICACI98N_DEL_COMPRADOR_Y_VENDEDOR</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+		        </xs:sequence>
+					<xs:attribute name="Version" use="required" type="xs:string" fixed="1.0" />
+				</xs:complexType>
+			</xs:element>
+		<xs:element name="Rectificaci93n_Operaci93n_Original" nillable="true" minOccurs="0">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Numero_Control_Operaci93n_Original" type="xs:int" />					
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+</xs:sequence>
+	</xs:complexType>
+</xs:element>
+</xs:schema>
