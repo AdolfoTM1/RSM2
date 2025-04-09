@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="Operacion">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="Datosoperacionanuladareporte">
-          <xs:complexType>
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+    <xs:element name="Operacion">
+        <xs:complexType>
             <xs:sequence>
-              <xs:element name="NumeroDeControl" type="xs:string"/>
+                <xs:element name="Datos_de_la_operacion_anulada_reporte_de_anulacion_de_operaciones">
+                    <xs:complexType>
+                        <xs:sequence>                            
+                            <xs:element name="Numero_de_control" type="xs:string" />                            
+                        </xs:sequence>
+                        <xs:attribute name="Version" use="required" type="xs:string" fixed="1.0" />
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
-            <xs:attribute name="Version" use="required" type="xs:string" fixed="1.0"/>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>
