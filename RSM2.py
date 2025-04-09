@@ -9,11 +9,32 @@ from datetime import datetime
 
 # Configuración de la aplicación
 st.set_page_config(page_title="Generador XML RSM2", layout="wide")
-st.title("📋 Generador de XML para RSM2 con Validación")
+st.title("📋 Generador de XML para RSM2")
+
+# --- Funciones de Utilidad ---
+def get_element_type(element):
+    """Obtiene el tipo de elemento XSD de manera segura"""
+    if element.type.is_simple():
+        return str(element.type.base_type)
+    return 'complex'
+
+def format_xml_value(value, xsd_type):
+    """Formatea valores para XML según su tipo XSD"""
+    if value is None:
+        return ""
+    
+    if xsd_type in {'decimal', 'float', 'double'}:
+        return f"{float(value):.2f}"
+    elif xsd_type == 'date':
+        return value.strftime("%Y-%m-%d")
+    elif xsd_type == 'dateTime':
+        return value.isoformat()
+    elif xsd_type == 'boolean':
+        return str(value).lower()
+    return str(value)
 
 # --- Carga de Esquemas ---
-def cargar_configuracion():
-    """Carga la configuración de esquemas desde un archivo JSON"""
+def load_config():
     try:
         with open('config/esquemas.json', 'r', encoding='utf-8') as f:
             return json.load(f)
@@ -21,200 +42,159 @@ def cargar_configuracion():
         st.error(f"❌ Error al cargar configuración: {str(e)}")
         st.stop()
 
-def cargar_xsd(ruta_xsd):
-    """Carga un esquema XSD desde archivo local o URL"""
+def load_xsd(xsd_path):
     try:
-        if ruta_xsd.startswith('http'):
-            response = requests.get(ruta_xsd, timeout=10)
+        if xsd_path.startswith('http'):
+            response = requests.get(xsd_path, timeout=10)
             response.raise_for_status()
             return xmlschema.XMLSchema(BytesIO(response.content))
-        else:
-            return xmlschema.XMLSchema(ruta_xsd)
+        return xmlschema.XMLSchema(xsd_path)
     except Exception as e:
         st.error(f"❌ Error al cargar XSD: {str(e)}")
         st.stop()
 
-# --- Formateo de Valores para XML ---
-def formatear_valor_para_xml(tipo, valor):
-    """Convierte valores a formato adecuado para XML según su tipo"""
-    if valor is None:
-        return ""
+# --- Generación de Formularios ---
+def create_input_field(element, path=""):
+    """Crea campos de entrada según el tipo XSD"""
+    field_id = f"{path}_{element.name}" if path else element.name
+    label = element.name.replace('_', ' ').title()
+    xsd_type = get_element_type(element)
     
-    if tipo in {'decimal', 'float', 'double'}:
-        # Formatear montos con 2 decimales
-        return f"{float(valor):.2f}"
-    elif tipo == 'date':
-        # Formatear fecha como YYYY-MM-DD
-        return valor.strftime("%Y-%m-%d")
-    elif tipo == 'dateTime':
-        # Formatear fecha/hora como ISO 8601
-        return valor.isoformat()
-    elif tipo == 'boolean':
-        # Convertir booleanos a lowercase
-        return str(valor).lower()
-    else:
-        return str(valor)
-
-# --- Generación de Campos del Formulario ---
-def generar_campo(elemento, path=""):
-    """Genera campos de formulario según el tipo de elemento XSD"""
-    nombre_completo = f"{path}_{elemento.name}" if path else elemento.name
-    etiqueta = elemento.name.replace('_', ' ').title()
-    tipo = str(elemento.type.base_type) if elemento.type.is_simple() else 'complex'
+    # Campos con enumeraciones (dropdowns)
+    if hasattr(element.type, 'enumeration'):
+        return st.selectbox(label, options=element.type.enumeration, key=field_id)
     
-    # Manejar enumeraciones (dropdowns)
-    if hasattr(elemento.type, 'enumeration'):
-        opciones = elemento.type.enumeration
-        return st.selectbox(etiqueta, options=opciones, key=nombre_completo)
-    
-    # Campos específicos con manejo especial
-    if tipo in {'decimal', 'float', 'double'}:
-        # Campo de monto con validación
-        valor = st.number_input(
-            etiqueta, 
-            min_value=0.0, 
-            step=0.01, 
-            format="%.2f", 
-            key=nombre_completo
+    # Campos numéricos (montos)
+    if xsd_type in {'decimal', 'float', 'double'}:
+        return st.number_input(
+            label,
+            min_value=0.0,
+            value=0.0,
+            step=0.01,
+            format="%.2f",
+            key=field_id
         )
-        return float(valor) if valor is not None else 0.0
     
-    elif tipo == 'date':
-        # Campo de fecha con formato adecuado
-        fecha = st.date_input(etiqueta, key=nombre_completo)
-        return fecha if fecha else datetime.now().date()
+    # Campos de fecha
+    if xsd_type == 'date':
+        return st.date_input(label, value=datetime.now().date(), key=field_id)
     
-    elif tipo == 'dateTime':
-        # Campo de fecha y hora
-        datetime_val = st.datetime_input(etiqueta, key=nombre_completo)
-        return datetime_val if datetime_val else datetime.now()
+    # Campos de fecha y hora
+    if xsd_type == 'dateTime':
+        return st.datetime_input(label, value=datetime.now(), key=field_id)
     
-    elif tipo == 'boolean':
-        # Checkbox para booleanos
-        return st.checkbox(etiqueta, key=nombre_completo)
+    # Campos booleanos
+    if xsd_type == 'boolean':
+        return st.checkbox(label, value=False, key=field_id)
     
-    else:
-        # Campo de texto genérico
-        return st.text_input(etiqueta, key=nombre_completo)
+    # Campos de texto (por defecto)
+    return st.text_input(label, key=field_id)
 
-def generar_formulario_complejo(elemento, path=""):
-    """Genera formulario para elementos complejos con anidación"""
-    datos = {}
-    current_path = f"{path}_{elemento.name}" if path else elemento.name
+def build_form(schema, element, path=""):
+    """Construye formulario dinámico basado en XSD"""
+    form_data = {}
+    current_path = f"{path}_{element.name}" if path else element.name
     
-    if elemento.type.is_complex():
-        for child in elemento.type.content_type.iter_elements():
+    if element.type.is_complex():
+        for child in element.type.content_type.iter_elements():
             if child.type.is_simple():
-                datos[child.name] = generar_campo(child, current_path)
+                form_data[child.name] = create_input_field(child, current_path)
             else:
-                datos.update(generar_formulario_complejo(child, current_path))
-    
-    return datos
+                form_data.update(build_form(schema, child, current_path))
+    return form_data
 
-# --- Generación de XML con Tipado Correcto ---
-def generar_xml(schema, root_element, datos):
-    """Genera XML estructurado con los datos del formulario"""
-    def construir_elemento(parent, name, value, element_def=None):
+# --- Generación de XML ---
+def generate_xml(schema, root_name, form_data):
+    """Genera XML a partir de los datos del formulario"""
+    def add_element(parent, name, value, element_def=None):
         if isinstance(value, dict):
-            sub_element = SubElement(parent, name)
+            node = SubElement(parent, name)
             for k, v in value.items():
-                construir_elemento(sub_element, k, v)
+                add_element(node, k, v)
         else:
             element = SubElement(parent, name)
-            # Obtener el tipo del elemento del esquema si está disponible
-            tipo = None
-            if element_def and element_def.type.is_simple():
-                tipo = str(element_def.type.base_type)
-            
-            # Formatear el valor según su tipo
-            element.text = formatear_valor_para_xml(tipo, value)
+            xsd_type = get_element_type(element_def) if element_def else None
+            element.text = format_xml_value(value, xsd_type)
     
-    root = Element(root_element)
-    root_schema_element = schema.elements[root_element]
+    root = Element(root_name)
+    root_element = schema.elements[root_name]
     
-    # Construir estructura XML manteniendo referencia a los elementos del esquema
-    for key, value in datos.items():
-        child_element = next(
-            (e for e in root_schema_element.type.content_type.iter_elements() 
-             if e.name == key), None)
-        construir_elemento(root, key, value, child_element)
+    for field, value in form_data.items():
+        schema_element = next(
+            (e for e in root_element.type.content_type.iter_elements() 
+             if e.name == field), None)
+        add_element(root, field, value, schema_element)
     
-    # Formatear XML
     xml_str = tostring(root, encoding='unicode')
-    xml_pretty = minidom.parseString(xml_str).toprettyxml(indent="    ")
-    return xml_pretty
+    return minidom.parseString(xml_str).toprettyxml(indent="    ")
 
-# --- Interfaz de Usuario ---
+# --- Interfaz Principal ---
 def main():
-    # Cargar configuración
-    config = cargar_configuracion()
-    esquemas = {e['nombre']: e for e in config['esquemas']}
+    # Configuración inicial
+    config = load_config()
+    schemas = {s['nombre']: s for s in config['esquemas']}
     
-    # Sidebar para configuración
+    # Sidebar para selección de esquema
     with st.sidebar:
         st.header("Configuración")
-        esquema_seleccionado = st.selectbox(
+        selected_schema = st.selectbox(
             "Tipo de operación:",
-            options=list(esquemas.keys())
-        )
+            options=list(schemas.keys())
         
-        modo_carga = st.radio(
+        load_method = st.radio(
             "Fuente del esquema:",
             ["Desde URL", "Desde archivo local"],
-            horizontal=True
-        )
+            horizontal=True)
         
-        if st.button("📥 Cargar Esquema", type="primary"):
-            with st.spinner(f"Cargando {esquema_seleccionado}..."):
+        if st.button("Cargar Esquema", type="primary"):
+            with st.spinner(f"Cargando {selected_schema}..."):
                 try:
-                    if modo_carga == "Desde URL":
-                        schema = cargar_xsd(esquemas[esquema_seleccionado]['url'])
-                    else:
-                        schema = cargar_xsd(esquemas[esquema_seleccionado]['archivo'])
-                    
+                    xsd_source = (
+                        schemas[selected_schema]['url'] if load_method == "Desde URL" 
+                        else schemas[selected_schema]['archivo']
+                    )
+                    schema = load_xsd(xsd_source)
                     st.session_state.schema = schema
                     st.session_state.root_element = list(schema.elements.keys())[0]
-                    st.success(f"✅ {esquema_seleccionado} cargado correctamente")
-                    st.session_state.form_data = {}
+                    st.success(f"✅ {selected_schema} cargado correctamente")
                 except Exception as e:
                     st.error(f"❌ Error: {str(e)}")
 
-    # Panel principal
+    # Panel principal del formulario
     if 'schema' in st.session_state:
         schema = st.session_state.schema
         root_element = st.session_state.root_element
         
-        st.subheader(f"Formulario para {esquema_seleccionado}")
-        st.caption("Complete los campos requeridos según el esquema XSD")
+        st.subheader(f"Formulario para {selected_schema}")
         
-        with st.form("formulario_xml"):
-            # Generar formulario completo
+        with st.form("xml_form"):
+            # Construir formulario dinámico
             root_schema_element = schema.elements[root_element]
-            form_data = generar_formulario_complejo(root_schema_element)
+            form_data = build_form(schema, root_schema_element)
             
-            if st.form_submit_button("🛠️ Generar XML", type="primary"):
+            if st.form_submit_button("Generar XML"):
                 try:
-                    xml_content = generar_xml(schema, root_element, form_data)
+                    xml_content = generate_xml(schema, root_element, form_data)
                     
-                    # Validar contra el esquema
-                    validation = schema.validate(BytesIO(xml_content.encode()))
-                    if validation is None:
-                        st.success("✅ XML válido según el esquema")
+                    # Validación del XML
+                    validation_errors = schema.validate(BytesIO(xml_content.encode()))
+                    if validation_errors is None:
+                        st.success("✅ XML generado y validado correctamente")
                         
-                        # Mostrar XML con sintaxis coloreada
-                        with st.expander("📄 Ver XML generado", expanded=True):
+                        # Mostrar XML
+                        with st.expander("Ver XML generado", expanded=True):
                             st.code(xml_content, language='xml')
                         
-                        # Botón de descarga
+                        # Descarga del XML
                         st.download_button(
-                            label="⬇️ Descargar XML",
+                            label="Descargar XML",
                             data=xml_content,
-                            file_name=f"{esquema_seleccionado.lower().replace(' ', '_')}.xml",
+                            file_name=f"{selected_schema.lower().replace(' ', '_')}.xml",
                             mime="application/xml"
                         )
                     else:
                         st.error("❌ Errores de validación encontrados")
-                        for error in validation:
+                        for error in validation_errors:
                             st.warning(f"- {error}")
                 except Exception as e:
                     st.error(f"❌ Error al generar XML: {str(e)}")
