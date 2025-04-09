@@ -7,9 +7,9 @@
             "descripcion": "Esquema para operaciones de anulación"
         },
         {
-            "nombre": "Facturación",
+            "nombre": "Operaciones_de_compra_y_o_venta_de_bienes_inmuebles",
             "archivo": "schemas/facturacion.xsd",
-            "url": "https://raw.githubusercontent.com/tu_usuario/tu_repo/main/schemas/facturacion.xsd",
+            "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/Operaciones_de_compra_y_o_venta_de_bienes_inmuebles_v1.0.xsd",
             "descripcion": "Esquema para facturas electrónicas"
         }
     ]
