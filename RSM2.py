@@ -140,7 +140,7 @@ def main():
         selected_schema = st.selectbox(
             "Tipo de operación:",
             options=list(schemas.keys())
-        
+        )
         load_method = st.radio(
             "Fuente del esquema:",
             ["Desde URL", "Desde archivo local"],
