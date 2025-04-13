@@ -196,16 +196,21 @@ def generate_xml(schema, root_name, form_data):
             if formatted_value is not None:
                 element.text = formatted_value
 
-    root = Element(root_name)
+    # Crear elemento raíz Operacion con el atributo Version
+    operacion_root = Element("Operacion", Version="1.0")  # Elemento raíz real con atributo
+    
+    # Crear el elemento de operaciones como hijo del raíz
+    operaciones_element = SubElement(operacion_root, root_name)
+    
+    # Añadir todos los elementos del formulario como hijos de operaciones
     root_element = schema.elements[root_name]
-
     for field, value in form_data.items():
         schema_element = next(
             (e for e in root_element.type.content_type.iter_elements()
              if e.name == field), None)
-        add_element(root, field, value, schema_element)
+        add_element(operaciones_element, field, value, schema_element)
 
-    xml_str = tostring(root, encoding='unicode')
+    xml_str = tostring(operacion_root, encoding='unicode')
     return minidom.parseString(xml_str).toprettyxml(indent="    ")
 
 # --- Interfaz Principal ---
