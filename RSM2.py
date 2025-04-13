@@ -157,15 +157,23 @@ def create_input_field(element, path="", parent_element=None):
         return st.text_input(label if 'label' in locals() else element.name, key=field_id)
 
 def build_form(schema, element, path="", parent_element=None):
-    """Construye formulario dinámico basado en XSD con manejo de atributos"""
+    """Construye formulario incluyendo campos para atributos requeridos"""
     form_data = {}
     current_path = f"{path}_{element.name}" if path else element.name
 
-    # Manejar atributos primero si es el elemento raíz
+    # Manejar atributos si es el elemento raíz
     if parent_element is None and hasattr(element.type, 'attributes'):
         for attr_name, attr in element.type.attributes.items():
             if attr.use == 'required':
-                form_data[f"@{attr_name}"] = attr.fixed if hasattr(attr, 'fixed') else "1.0"
+                # Crear un campo para el atributo (prefijado con @)
+                attr_field_id = f"{current_path}_@{attr_name}"
+                default_value = attr.fixed if hasattr(attr, 'fixed') else "1.0"
+                
+                st.text_input(f"Atributo {attr_name} (requerido)", 
+                            value=default_value,
+                            key=attr_field_id)
+                
+                form_data[f"@{attr_name}"] = st.session_state.get(attr_field_id, default_value)
 
     if element.type.is_complex():
         for child in element.type.content_type.iter_elements():
@@ -186,7 +194,7 @@ def build_form(schema, element, path="", parent_element=None):
 
 # --- Generación de XML Universal ---
 def generate_xml(schema, root_name, form_data):
-    """Genera XML válido para cualquier esquema"""
+    """Genera XML válido incluyendo automáticamente atributos requeridos"""
     def add_element(parent, name, value, element_def=None):
         if name.startswith('@'):  # Es un atributo
             parent.set(name[1:], str(value))
@@ -195,10 +203,16 @@ def generate_xml(schema, root_name, form_data):
         if isinstance(value, dict):
             element = SubElement(parent, name)
             
-            # Añadir atributos primero
-            for k, v in sorted(value.items(), key=lambda x: (not x[0].startswith('@'), x[0])):
-                add_element(element, k, v, 
-                          schema.elements.get(f"{name}_{k}") if schema else None)
+            # Procesar primero los atributos
+            attrs = {k: v for k, v in value.items() if k.startswith('@')}
+            for attr, val in attrs.items():
+                element.set(attr[1:], str(val))
+            
+            # Luego los elementos normales
+            for k, v in value.items():
+                if not k.startswith('@'):
+                    child_element = schema.elements.get(f"{name}_{k}") if schema else None
+                    add_element(element, k, v, child_element)
         else:
             element = SubElement(parent, name)
             if value is not None and str(value) != "":
@@ -210,16 +224,20 @@ def generate_xml(schema, root_name, form_data):
     # Crear elemento raíz
     root = Element(root_name)
     
-    # Añadir atributos del raíz si existen
-    root_attrs = {k: v for k, v in form_data.items() if k.startswith('@')}
-    for attr, value in root_attrs.items():
-        root.set(attr[1:], str(value))
+    # Añadir automáticamente atributos requeridos del elemento raíz
+    root_element = schema.elements[root_name]
+    if hasattr(root_element.type, 'attributes'):
+        for attr_name, attr in root_element.type.attributes.items():
+            if attr.use == 'required':
+                # Buscar en form_data o usar el valor fijo del XSD
+                attr_value = form_data.get(f"@{attr_name}", attr.fixed if hasattr(attr, 'fixed') else "1.0")
+                root.set(attr_name, str(attr_value))
     
     # Añadir el resto de elementos
     for field, value in form_data.items():
         if not field.startswith('@'):  # Ignorar atributos ya procesados
             schema_element = next(
-                (e for e in schema.elements[root_name].type.content_type.iter_elements()
+                (e for e in root_element.type.content_type.iter_elements()
                  if e.name == field), None)
             add_element(root, field, value, schema_element)
 
