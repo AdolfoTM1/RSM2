@@ -15,16 +15,24 @@ st.title("📋 Generador de XML para RSM2")
 def get_element_type(element):
     """Obtiene el tipo de elemento XSD de manera segura"""
     if element.type.is_simple():
-        return str(element.type.base_type)
+        base_type = str(element.type.base_type)
+        # Manejar tipos derivados como long, int, etc.
+        if 'long' in base_type.lower():
+            return 'long'
+        elif 'int' in base_type.lower():
+            return 'int'
+        return base_type
     return 'complex'
 
 def format_xml_value(value, xsd_type):
     """Formatea valores para XML según su tipo XSD"""
     if value is None:
-        return ""
+        return None  # Para elementos nillable
 
     if xsd_type in {'decimal', 'float', 'double'}:
         return f"{float(value):.2f}"
+    elif xsd_type in {'long', 'int', 'integer'}:
+        return str(int(value))
     elif xsd_type == 'date':
         return value.strftime("%Y-%m-%d")
     elif xsd_type == 'dateTime':
@@ -60,36 +68,70 @@ def create_input_field(element, path=""):
     label = element.name.replace('_', ' ').title()
     xsd_type = get_element_type(element)
 
+    # Determinar si el campo es obligatorio
+    is_required = (element.min_occurs is not None and element.min_occurs > 0) or not element.is_nillable()
+
     # Campos con enumeraciones (dropdowns)
     if hasattr(element.type, 'enumeration'):
-        return st.selectbox(label, options=element.type.enumeration, key=field_id)
+        options = element.type.enumeration
+        default_idx = 0 if "Elegir..." in options else None
+        return st.selectbox(
+            label, 
+            options=options,
+            index=default_idx,
+            key=field_id
+        )
 
-    # Campos numéricos (montos)
+    # Campos numéricos decimales
     elif xsd_type in {'decimal', 'float', 'double'}:
         return st.number_input(
             label,
-            min_value=None,  # Permitir valores vacíos inicialmente si es necesario
-            value=0.0,
+            value=0.0 if is_required else None,
             step=0.01,
             format="%.2f",
+            key=field_id
+        )
+    
+    # Campos enteros (long, int)
+    elif xsd_type in {'long', 'int', 'integer'}:
+        return st.number_input(
+            label,
+            value=0 if is_required else None,
+            step=1,
             key=field_id
         )
 
     # Campos de fecha
     elif xsd_type == 'date':
-        return st.date_input(label, value=datetime.now().date(), key=field_id)
+        return st.date_input(
+            label, 
+            value=datetime.now().date() if is_required else None,
+            key=field_id
+        )
 
     # Campos de fecha y hora
     elif xsd_type == 'dateTime':
-        return st.datetime_input(label, value=datetime.now(), key=field_id)
+        return st.datetime_input(
+            label, 
+            value=datetime.now() if is_required else None,
+            key=field_id
+        )
 
     # Campos booleanos
     elif xsd_type == 'boolean':
-        return st.checkbox(label, value=False, key=field_id)
+        return st.checkbox(
+            label, 
+            value=False if is_required else None,
+            key=field_id
+        )
 
     # Campos de texto (por defecto)
     else:
-        return st.text_input(label, key=field_id)
+        return st.text_input(
+            label, 
+            value="" if is_required else None,
+            key=field_id
+        )
 
 def build_form(schema, element, path=""):
     """Construye formulario dinámico basado en XSD"""
@@ -97,11 +139,19 @@ def build_form(schema, element, path=""):
     current_path = f"{path}_{element.name}" if path else element.name
 
     if element.type.is_complex():
+        # Manejar elementos complejos
         for child in element.type.content_type.iter_elements():
             if child.type.is_simple():
                 form_data[child.name] = create_input_field(child, current_path)
             else:
-                form_data.update(build_form(schema, child, current_path))
+                # Manejar sub-elementos complejos
+                child_data = build_form(schema, child, current_path)
+                if child_data:  # Solo añadir si hay datos
+                    form_data[child.name] = child_data
+    else:
+        # Manejar elementos simples
+        form_data[element.name] = create_input_field(element, current_path)
+
     return form_data
 
 # --- Generación de XML ---
@@ -111,11 +161,14 @@ def generate_xml(schema, root_name, form_data):
         if isinstance(value, dict):
             node = SubElement(parent, name)
             for k, v in value.items():
-                add_element(node, k, v, schema.elements.get(f"{parent.tag}_{k}")) # Pass schema element for nested elements
+                child_element = schema.elements.get(f"{name}_{k}") if schema else None
+                add_element(node, k, v, child_element)
         else:
             element = SubElement(parent, name)
             xsd_type = get_element_type(element_def) if element_def else None
-            element.text = format_xml_value(value, xsd_type)
+            formatted_value = format_xml_value(value, xsd_type)
+            if formatted_value is not None:
+                element.text = formatted_value
 
     root = Element(root_name)
     root_element = schema.elements[root_name]
