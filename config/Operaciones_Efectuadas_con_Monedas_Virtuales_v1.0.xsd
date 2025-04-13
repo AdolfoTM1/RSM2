@@ -1,0 +1,1642 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+    <xs:element name="Operacion">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Operaciones_Efectuadas_con_Monedas_Virtuales">
+                    <xs:annotation>
+                        <xs:documentation source="mensaje">Atención: No es obligatorio el reporte del formulario "Sin Movimientos" cuando no posea Operaciones Efectuadas con Monedas Virtuales.|Grey</xs:documentation>
+                        <xs:documentation source="funcion">ValidarGrillas|Persona_F92sica_que_Oper93_con_Monedas_Virtuales,Persona_F92sica_Extranjera_que_Oper93_con_Monedas_Virtuales,Persona_Jur92dica_que_Oper93_con_Monedas_Virtual,Persona_Jur92dica_Extranjera_que_Oper93_con_Monedas_Virtual</xs:documentation>
+                        <xs:documentation source="funcion">CompararMontos|Monto_Total_de_la_Operaci93n_en_Pesos,Monto_Operado_en_Moneda_Virtual_en_Pesos</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Tipo_de_Operaci93n">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:enumeration value="ACUERDOS FIDUCIARIOS"/>
+                                <xs:enumeration value="APORTES DE CAPITAL"/>
+                                <xs:enumeration value="ASISTENCIA"/>
+                                <xs:enumeration value="BANCA ELECTRÓNICA"/>
+                                <xs:enumeration value="CAJA DE AHORROS"/>
+                                <xs:enumeration value="CAJA DE SEGURIDAD"/>
+                                <xs:enumeration value="CANCELACIÓN ANTICIPADA DE CRÉDITOS"/>
+                                <xs:enumeration value="CANCELACIÓN ANTICIPADA PÓLIZA DE SEGURO"/>
+                                <xs:enumeration value="CANCELACIÓN DE HIPOTECA"/>
+                                <xs:enumeration value="CARTA DE CRÉDITO DE IMPORTACIÓN"/>
+                                <xs:enumeration value="CAUCIONES DE TÍTULOS PÚBLICOS"/>
+                                <xs:enumeration value="CERTIFICACIÓN DE FIRMA"/>
+                                <xs:enumeration value="CESIÓN DE DERECHOS"/>
+                                <xs:enumeration value="CESIÓN DE DERECHOS DE FIDEICOMISOS"/>
+                                <xs:enumeration value="CHEQUES"/>
+                                <xs:enumeration value="COBRANZAS PÓLIZAS DE SEGUROS"/>
+                                <xs:enumeration value="COBRO DE GIROS"/>
+                                <xs:enumeration value="COMERCIO EXTERIOR"/>
+                                <xs:enumeration value="COMPRA DE ORO"/>
+                                <xs:enumeration value="COMPRA EN SUBASTA"/>
+                                <xs:enumeration value="COMPRA/VENTA DE BONOS JUDICIALES"/>
+                                <xs:enumeration value="COMPRA/VENTA DE INMUEBLES"/>
+                                <xs:enumeration value="COMPRA/VENTA DE PAQUETE ACCIONARIO"/>
+                                <xs:enumeration value="COMPRA/VENTA DE RODADOS"/>
+                                <xs:enumeration value="COMPRA/VENTA DE TÍTULOS PÚBLICOS"/>
+                                <xs:enumeration value="COMPRA/VENTA TARJETAS TELEFÓNICAS"/>
+                                <xs:enumeration value="COMPRA/VENTA VALORES NEGOCIABLES"/>
+                                <xs:enumeration value="COMPRA/VENTA DE MONEDA EXTRANJERA"/>
+                                <xs:enumeration value="COMPRA/VENTA DE FÁBRICAS Y/O EMPRESAS"/>
+                                <xs:enumeration value="CONSTATACIÓN DE INTIMACIÓN DE PAGO"/>
+                                <xs:enumeration value="CONVENIO CANCELACIÓN DEUDA Y PAGO"/>
+                                <xs:enumeration value="CONVENIO DÉBITO AUTOMÁTICO"/>
+                                <xs:enumeration value="CUENTA COMITENTE"/>
+                                <xs:enumeration value="CUENTA CORRIENTE"/>
+                                <xs:enumeration value="CUENTA CUSTODIA"/>
+                                <xs:enumeration value="CUENTA TÍTULOS"/>
+                                <xs:enumeration value="DONACIÓN"/>
+                                <xs:enumeration value="EGRESO DE DÓLARES NO DECLARADOS"/>
+                                <xs:enumeration value="ESCRITURAS DE PODERES"/>
+                                <xs:enumeration value="ESCRITURAS PROTOCOLARES"/>
+                                <xs:enumeration value="FONDO COMÚN DE INVERSIÓN"/>
+                                <xs:enumeration value="IMPORTACIONES"/>
+                                <xs:enumeration value="INGRESO DE DIVISAS"/>
+                                <xs:enumeration value="INGRESOS NO DECLARADOS"/>
+                                <xs:enumeration value="INVERSIONES DE PORTAFOLIO EN EL EXTERIOR"/>
+                                <xs:enumeration value="LIBERACIÓN DE HIPOTECA"/>
+                                <xs:enumeration value="MUTUOS"/>
+                                <xs:enumeration value="OPERACIONES BURSATLES"/>
+                                <xs:enumeration value="ORDEN DE PAGO"/>
+                                <xs:enumeration value="OTROS"/>
+                                <xs:enumeration value="P.PRENDARIO"/>
+                                <xs:enumeration value="PAGARÉ"/>
+                                <xs:enumeration value="PAGARÉ EXTERIOR"/>
+                                <xs:enumeration value="PAGO A PROVEEDORES"/>
+                                <xs:enumeration value="PF REPROGRAMADO"/>
+                                <xs:enumeration value="PLAZO FIJO"/>
+                                <xs:enumeration value="PREMIO DE BINGO"/>
+                                <xs:enumeration value="PREMIO DE CASINOS"/>
+                                <xs:enumeration value="PRÉSTAMO HIPOTECARIO"/>
+                                <xs:enumeration value="PRÉSTAMO PERSONAL"/>
+                                <xs:enumeration value="PRÉSTAMO PRENDARIO"/>
+                                <xs:enumeration value="PRÉSTAMOS DEL EXTERIOR"/>
+                                <xs:enumeration value="RECAUDACIONES"/>
+                                <xs:enumeration value="RECONOCIMIENTO DEUDA Y CESIÓN DERECHOS"/>
+                                <xs:enumeration value="REMESAS DE FONDOS"/>
+                                <xs:enumeration value="REPATRIACIONES INVERSIONES DE RESIDENTES"/>
+                                <xs:enumeration value="RESCATE DE PÓLIZAS"/>
+                                <xs:enumeration value="RETIROS EN EFECTIVO"/>
+                                <xs:enumeration value="SEGURO DE CAPITALIZACIÓN"/>
+                                <xs:enumeration value="SEGURO DE VIDA"/>
+                                <xs:enumeration value="SEGURO RESPONSABILIDAD CIVIL PROFESIONAL"/>
+                                <xs:enumeration value="SEGUROS ACCIDENTES PERSONALES"/>
+                                <xs:enumeration value="SEGUROS DE RETIRO"/>
+                                <xs:enumeration value="SERVICIOS DE RED"/>
+                                <xs:enumeration value="TARJETAS DE CREDITO"/>
+                                <xs:enumeration value="TENENCIA ACCIONARIA"/>
+                                <xs:enumeration value="TENENCIA DE MONEDA EXTRANJERA"/>
+                                <xs:enumeration value="TÍTULOS COOPERATIVOS DE CAPITALIZACIÓN"/>
+                                <xs:enumeration value="TÍTULOS PÚBLICOS"/>
+                                <xs:enumeration value="TRANFERENCIA"/>
+                                <xs:enumeration value="TRANSFERENCIA DE DOMINIOS"/>
+                                <xs:enumeration value="TRANSFERENCIA TENTADA DESDE EL EXTERIOR"/>
+                                <xs:enumeration value="TRANSFERENCIAS BANCARIAS DE FONDOS"/>
+                                <xs:enumeration value="TRANSFERENCIAS DE FONDOS"/>
+                                <xs:enumeration value="TRASLADOS DE CAUDALES"/>
+                                <xs:enumeration value="VENTA DE ACCIONES"/>
+                                <xs:enumeration value="VENTA DE ORO"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Fecha_de_la_Operaci93n" type="xs:dateTime" />
+                          <xs:element name="Tipo_de_Moneda_Virtual_Operado" type="xs:string" />
+                          <xs:element name="Unidades_de_Moneda_Virtual_Operado" type="xs:long" />
+                          <xs:element name="Cotizaci93n_Unitaria_de_la_Moneda_al_Momento_de_la_Operaci93n_en_Pesos" type="xs:decimal" />
+                          <xs:element name="Monto_Operado_en_Moneda_Virtual_en_Pesos" type="xs:long" >
+                            <xs:annotation>
+                              <xs:documentation source="tooltip">Monto expresado en números enteros sin decimales.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="Monto_Total_de_la_Operaci93n_en_Pesos" type="xs:long" >
+                            <xs:annotation>
+                              <xs:documentation source="tooltip">Monto expresado en números enteros sin decimales.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="Detalle" type="xs:string" nillable="true" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation source="descripcion"></xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="Persona_F92sica_que_Oper93_con_Monedas_Virtuales" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation source="funcion">ValidarCUIT|CUIT_CUIL_CDI88Persona_Fisica</xs:documentation>
+                              <xs:documentation source="funcion">ValidarDOC|Tipo_Documento88Persona_Fisica,N94mero_Documento88Persona_Fisica</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                                <xs:element name="Rol_de_la_Persona_en_la_Operaci93n88Persona_Fisica">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="Comprador"/>
+                                      <xs:enumeration value="Vendedor"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="Apellido88Persona_Fisica" type="xs:string" />
+                                <xs:element name="Segundo_Apellido88Persona_Fisica" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Nombre88Persona_Fisica" type="xs:string" />
+                                <xs:element name="Segundo_Nombre88Persona_Fisica" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Tipo_Documento88Persona_Fisica">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="Documento Nacional de Identidad"/>
+                                      <xs:enumeration value="Libreta de Enrolamiento"/>
+                                      <xs:enumeration value="Libreta Cívica"/>
+                                      <xs:enumeration value="Cédula Mercosur"/>
+                                      <xs:enumeration value="Pasaporte"/>
+                                      <xs:enumeration value="Pasaporte EXT"/>
+                                      <xs:enumeration value="Documento EXT"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="N94mero_Documento88Persona_Fisica" type="xs:string"/>
+                                <xs:element name="CUIT_CUIL_CDI88Persona_Fisica" default="99\-99999999\-9" type="xs:string" >
+                                  <xs:annotation>
+                                    <xs:documentation source="ValidationExpression">(^\d{2}\-?\d{8}\-?\d{1}$)</xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Calle88Persona_Fisica" type="xs:string" />
+                                <xs:element name="Nro88Persona_Fisica" type="xs:int" />
+                                <xs:element name="Piso88Persona_Fisica" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Departamento88Persona_Fisica" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Localidad88Persona_Fisica" type="xs:string" />
+                                <xs:element name="C93digo_Postal88Persona_Fisica" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Provincia88Persona_Fisica" type="xs:string">
+                                  <xs:annotation>
+                                    <xs:documentation source="otrasopciones">
+                                      <xs:enumeration value="CABA"/>
+                                      <xs:enumeration value="Buenos Aires"/>
+                                      <xs:enumeration value="Catamarca"/>
+                                      <xs:enumeration value="Córdoba"/>
+                                      <xs:enumeration value="Corrientes"/>
+                                      <xs:enumeration value="Chaco"/>
+                                      <xs:enumeration value="Chubut"/>
+                                      <xs:enumeration value="Entre Ríos"/>
+                                      <xs:enumeration value="Formosa"/>
+                                      <xs:enumeration value="Jujuy"/>
+                                      <xs:enumeration value="La Pampa"/>
+                                      <xs:enumeration value="La Rioja"/>
+                                      <xs:enumeration value="Mendoza"/>
+                                      <xs:enumeration value="Misiones"/>
+                                      <xs:enumeration value="Neuquén"/>
+                                      <xs:enumeration value="Río Negro"/>
+                                      <xs:enumeration value="Salta"/>
+                                      <xs:enumeration value="San Juan"/>
+                                      <xs:enumeration value="San Luis"/>
+                                      <xs:enumeration value="Santa Cruz"/>
+                                      <xs:enumeration value="Santa Fé"/>
+                                      <xs:enumeration value="Santiago Del Estero"/>
+                                      <xs:enumeration value="Tucumán"/>
+                                      <xs:enumeration value="Tierra del Fuego"/>
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Pa92s88Persona_Fisica" >
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="Argentina"/>
+                                      <xs:enumeration value="Afganistán"/>
+                                      <xs:enumeration value="Albania"/>
+                                      <xs:enumeration value="Alemania"/>
+                                      <xs:enumeration value="Andorra"/>
+                                      <xs:enumeration value="Angola"/>
+                                      <xs:enumeration value="Anguilla"/>
+                                      <xs:enumeration value="Antártida"/>
+                                      <xs:enumeration value="Antigua y Barbuda"/>
+                                      <xs:enumeration value="Antillas Holandesas"/>
+                                      <xs:enumeration value="Arabia Saudita"/>
+                                      <xs:enumeration value="Argelia"/>
+                                      <xs:enumeration value="Armenia"/>
+                                      <xs:enumeration value="Aruba"/>
+                                      <xs:enumeration value="Australia"/>
+                                      <xs:enumeration value="Austria"/>
+                                      <xs:enumeration value="Azerbaiyán"/>
+                                      <xs:enumeration value="Bahamas"/>
+                                      <xs:enumeration value="Bahrein"/>
+                                      <xs:enumeration value="Bangladesh"/>
+                                      <xs:enumeration value="Barbados"/>
+                                      <xs:enumeration value="Bélgica"/>
+                                      <xs:enumeration value="Belice"/>
+                                      <xs:enumeration value="Benín"/>
+                                      <xs:enumeration value="Bermudas"/>
+                                      <xs:enumeration value="Bielorrusia"/>
+                                      <xs:enumeration value="Bolivia"/>
+                                      <xs:enumeration value="Bosnia-Herzegovina"/>
+                                      <xs:enumeration value="Botswana"/>
+                                      <xs:enumeration value="Brasil"/>
+                                      <xs:enumeration value="Brunei Darussalam"/>
+                                      <xs:enumeration value="Bulgaria"/>
+                                      <xs:enumeration value="Burkina Faso"/>
+                                      <xs:enumeration value="Burundi"/>
+                                      <xs:enumeration value="Bután"/>
+                                      <xs:enumeration value="Cabo Verde"/>
+                                      <xs:enumeration value="Camboya"/>
+                                      <xs:enumeration value="Camerún"/>
+                                      <xs:enumeration value="Canadá"/>
+                                      <xs:enumeration value="Chad"/>
+                                      <xs:enumeration value="Chile"/>
+                                      <xs:enumeration value="China"/>
+                                      <xs:enumeration value="Chipre"/>
+                                      <xs:enumeration value="Ciudad del Vaticano"/>
+                                      <xs:enumeration value="Colombia"/>
+                                      <xs:enumeration value="Comores"/>
+                                      <xs:enumeration value="Corea del Norte"/>
+                                      <xs:enumeration value="Corea del Sur"/>
+                                      <xs:enumeration value="Costa de Marfil"/>
+                                      <xs:enumeration value="Costa Rica"/>
+                                      <xs:enumeration value="Croacia"/>
+                                      <xs:enumeration value="Cuba"/>
+                                      <xs:enumeration value="Dinamarca"/>
+                                      <xs:enumeration value="Djibouti, Yibuti"/>
+                                      <xs:enumeration value="Dominica"/>
+                                      <xs:enumeration value="Dominicana, República"/>
+                                      <xs:enumeration value="Ecuador"/>
+                                      <xs:enumeration value="Egipto"/>
+                                      <xs:enumeration value="El Salvador"/>
+                                      <xs:enumeration value="Emiratos Árabes Unidos"/>
+                                      <xs:enumeration value="Eritrea"/>
+                                      <xs:enumeration value="Eslovaquia"/>
+                                      <xs:enumeration value="Eslovenia"/>
+                                      <xs:enumeration value="España"/>
+                                      <xs:enumeration value="Estados Unidos"/>
+                                      <xs:enumeration value="Estonia"/>
+                                      <xs:enumeration value="Etiopía"/>
+                                      <xs:enumeration value="Federación Rusa"/>
+                                      <xs:enumeration value="Filipinas"/>
+                                      <xs:enumeration value="Finlandia"/>
+                                      <xs:enumeration value="Fiyi"/>
+                                      <xs:enumeration value="Francia"/>
+                                      <xs:enumeration value="Gabón"/>
+                                      <xs:enumeration value="Gambia"/>
+                                      <xs:enumeration value="Georgia"/>
+                                      <xs:enumeration value="Ghana"/>
+                                      <xs:enumeration value="Gibraltar"/>
+                                      <xs:enumeration value="Gran Bretaña"/>
+                                      <xs:enumeration value="Granada"/>
+                                      <xs:enumeration value="Grecia"/>
+                                      <xs:enumeration value="Groenlandia"/>
+                                      <xs:enumeration value="Guadalupe"/>
+                                      <xs:enumeration value="Guam"/>
+                                      <xs:enumeration value="Guatemala"/>
+                                      <xs:enumeration value="Guayana Francesa"/>
+                                      <xs:enumeration value="Guernsey"/>
+                                      <xs:enumeration value="Guinea Bissau"/>
+                                      <xs:enumeration value="Guinea Ecuatorial"/>
+                                      <xs:enumeration value="Guyana"/>
+                                      <xs:enumeration value="Haití"/>
+                                      <xs:enumeration value="Honduras"/>
+                                      <xs:enumeration value="Hong Kong"/>
+                                      <xs:enumeration value="Hungría"/>
+                                      <xs:enumeration value="India"/>
+                                      <xs:enumeration value="Indonesia"/>
+                                      <xs:enumeration value="Irán"/>
+                                      <xs:enumeration value="Iraq"/>
+                                      <xs:enumeration value="Irlanda"/>
+                                      <xs:enumeration value="Isla Ascension"/>
+                                      <xs:enumeration value="Isla Bouvet"/>
+                                      <xs:enumeration value="Isla De Navidad, Isla Christmas"/>
+                                      <xs:enumeration value="Isla Jan Mayen y Archipiélago de Svalbard"/>
+                                      <xs:enumeration value="Isla Man"/>
+                                      <xs:enumeration value="Isla Pitcairn"/>
+                                      <xs:enumeration value="Islandia"/>
+                                      <xs:enumeration value="Islas Caimán"/>
+                                      <xs:enumeration value="Islas Cocos"/>
+                                      <xs:enumeration value="Islas Cook"/>
+                                      <xs:enumeration value="Islas de Heard y McDonald"/>
+                                      <xs:enumeration value="Islas Feroe"/>
+                                      <xs:enumeration value="Islas Malvinas"/>
+                                      <xs:enumeration value="Islas Marshall"/>
+                                      <xs:enumeration value="Islas Salomón"/>
+                                      <xs:enumeration value="Islas Turcas y Caicos"/>
+                                      <xs:enumeration value="Islas Virgenes Americanas"/>
+                                      <xs:enumeration value="Islas Virgenes Británicas"/>
+                                      <xs:enumeration value="Israel"/>
+                                      <xs:enumeration value="Italia"/>
+                                      <xs:enumeration value="Jamaica"/>
+                                      <xs:enumeration value="Japón"/>
+                                      <xs:enumeration value="Jersey"/>
+                                      <xs:enumeration value="Jordania"/>
+                                      <xs:enumeration value="Kazajstán"/>
+                                      <xs:enumeration value="Kenia"/>
+                                      <xs:enumeration value="Kirguistán"/>
+                                      <xs:enumeration value="Kiribati"/>
+                                      <xs:enumeration value="Kuwait"/>
+                                      <xs:enumeration value="Laos"/>
+                                      <xs:enumeration value="Lesotho"/>
+                                      <xs:enumeration value="Letonia"/>
+                                      <xs:enumeration value="Líbano"/>
+                                      <xs:enumeration value="Liberia"/>
+                                      <xs:enumeration value="Libia"/>
+                                      <xs:enumeration value="Liechtenstein"/>
+                                      <xs:enumeration value="Lituania"/>
+                                      <xs:enumeration value="Luxemburgo"/>
+                                      <xs:enumeration value="Macao"/>
+                                      <xs:enumeration value="Macedonia"/>
+                                      <xs:enumeration value="Madagascar"/>
+                                      <xs:enumeration value="Malasia"/>
+                                      <xs:enumeration value="Malawi"/>
+                                      <xs:enumeration value="Maldivas"/>
+                                      <xs:enumeration value="Malí"/>
+                                      <xs:enumeration value="Malta"/>
+                                      <xs:enumeration value="Marianas del Norte"/>
+                                      <xs:enumeration value="Marruecos"/>
+                                      <xs:enumeration value="Martinica"/>
+                                      <xs:enumeration value="Mauricio"/>
+                                      <xs:enumeration value="Mauritania"/>
+                                      <xs:enumeration value="Mayotte"/>
+                                      <xs:enumeration value="México"/>
+                                      <xs:enumeration value="Micronesia, Estados Federados de"/>
+                                      <xs:enumeration value="Moldavia"/>
+                                      <xs:enumeration value="Mónaco"/>
+                                      <xs:enumeration value="Mongolia"/>
+                                      <xs:enumeration value="Montenegro"/>
+                                      <xs:enumeration value="Montserrat"/>
+                                      <xs:enumeration value="Mozambique"/>
+                                      <xs:enumeration value="Myanmar, Birmania"/>
+                                      <xs:enumeration value="Namibia"/>
+                                      <xs:enumeration value="Nauru"/>
+                                      <xs:enumeration value="Nepal"/>
+                                      <xs:enumeration value="Nicaragua"/>
+                                      <xs:enumeration value="Niger"/>
+                                      <xs:enumeration value="Nigeria"/>
+                                      <xs:enumeration value="Niue"/>
+                                      <xs:enumeration value="Norfolk Island"/>
+                                      <xs:enumeration value="Noruega"/>
+                                      <xs:enumeration value="Nueva Caledonia"/>
+                                      <xs:enumeration value="Nueva Zelanda"/>
+                                      <xs:enumeration value="Omán"/>
+                                      <xs:enumeration value="Países Bajos, Holanda"/>
+                                      <xs:enumeration value="Pakistán"/>
+                                      <xs:enumeration value="Palau"/>
+                                      <xs:enumeration value="Palestina"/>
+                                      <xs:enumeration value="Panamá"/>
+                                      <xs:enumeration value="Papúa-Nueva Guinea"/>
+                                      <xs:enumeration value="Paraguay"/>
+                                      <xs:enumeration value="Perú"/>
+                                      <xs:enumeration value="Polinesia Francesa"/>
+                                      <xs:enumeration value="Polonia"/>
+                                      <xs:enumeration value="Portugal"/>
+                                      <xs:enumeration value="Puerto Rico"/>
+                                      <xs:enumeration value="Qatar"/>
+                                      <xs:enumeration value="Reino Unido"/>
+                                      <xs:enumeration value="República Centroafricana"/>
+                                      <xs:enumeration value="República Checa"/>
+                                      <xs:enumeration value="República del Congo"/>
+                                      <xs:enumeration value="República Democrática del Congo"/>
+                                      <xs:enumeration value="República Guinea"/>
+                                      <xs:enumeration value="Reunión"/>
+                                      <xs:enumeration value="Ruanda"/>
+                                      <xs:enumeration value="Rumanía"/>
+                                      <xs:enumeration value="Sáhara Occidental"/>
+                                      <xs:enumeration value="Samoa"/>
+                                      <xs:enumeration value="Samoa Americana"/>
+                                      <xs:enumeration value="San Cristobal y Nevis"/>
+                                      <xs:enumeration value="San Marino"/>
+                                      <xs:enumeration value="San Pedro y Miquelón"/>
+                                      <xs:enumeration value="San Tomé y Príncipe"/>
+                                      <xs:enumeration value="San Vincente y Granadinas"/>
+                                      <xs:enumeration value="Santa Elena"/>
+                                      <xs:enumeration value="Santa Lucía"/>
+                                      <xs:enumeration value="Santa Sede, Vaticano, Ciudad del Vaticano"/>
+                                      <xs:enumeration value="Senegal"/>
+                                      <xs:enumeration value="Serbia"/>
+                                      <xs:enumeration value="Seychelles"/>
+                                      <xs:enumeration value="Sierra Leona"/>
+                                      <xs:enumeration value="Singapur"/>
+                                      <xs:enumeration value="Siria"/>
+                                      <xs:enumeration value="Somalia"/>
+                                      <xs:enumeration value="Sri Lanka"/>
+                                      <xs:enumeration value="Sudáfrica"/>
+                                      <xs:enumeration value="Sudán"/>
+                                      <xs:enumeration value="Sudo Georgia y las Islas Sandwich del Sur"/>
+                                      <xs:enumeration value="Suecia"/>
+                                      <xs:enumeration value="Suiza"/>
+                                      <xs:enumeration value="Surinam"/>
+                                      <xs:enumeration value="Swazilandia"/>
+                                      <xs:enumeration value="Tadjikistan"/>
+                                      <xs:enumeration value="Tailandia"/>
+                                      <xs:enumeration value="Taiwan"/>
+                                      <xs:enumeration value="Tanzania"/>
+                                      <xs:enumeration value="Territorio Británico del Océano Indico"/>
+                                      <xs:enumeration value="Tíbet"/>
+                                      <xs:enumeration value="Timor Oriental"/>
+                                      <xs:enumeration value="Togo"/>
+                                      <xs:enumeration value="Tokelau"/>
+                                      <xs:enumeration value="Tonga"/>
+                                      <xs:enumeration value="Trinidad y Tobago"/>
+                                      <xs:enumeration value="Túnez"/>
+                                      <xs:enumeration value="Turkmenistan"/>
+                                      <xs:enumeration value="Turquía"/>
+                                      <xs:enumeration value="Tuvalu"/>
+                                      <xs:enumeration value="Ucrania"/>
+                                      <xs:enumeration value="Uganda"/>
+                                      <xs:enumeration value="Uruguay"/>
+                                      <xs:enumeration value="Uzbekistán"/>
+                                      <xs:enumeration value="Vanuatu"/>
+                                      <xs:enumeration value="Venezuela"/>
+                                      <xs:enumeration value="Vietnam"/>
+                                      <xs:enumeration value="Wallis y Futuna"/>
+                                      <xs:enumeration value="Yemen"/>
+                                      <xs:enumeration value="Zaire"/>
+                                      <xs:enumeration value="Zambia"/>
+                                      <xs:enumeration value="Zimbabwe"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="N94mero_de_Cuenta_o_Usuario_en_Plataforma_Virtual88Persona_Fisica" type="xs:string" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Persona_F92sica_Extranjera_que_Oper93_con_Monedas_Virtuales" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation source="funcion">ValidarCUIT|CUIT_CUIL_CDI88Persona_FisicaExt</xs:documentation>
+                              <xs:documentation source="funcion">ValidarDOCExtranjero|Tipo_Identificador_Tributario88Persona_FisicaExt,Nro_Identificaci93n_Tributaria88Persona_FisicaExt</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                                <xs:element name="Rol_de_la_Persona_en_la_Operaci93n88Persona_FisicaExt">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="Comprador"/>
+                                      <xs:enumeration value="Vendedor"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="Apellido88Persona_FisicaExt" type="xs:string" />
+                                <xs:element name="Segundo_Apellido88Persona_FisicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Nombre88Persona_FisicaExt" type="xs:string" />
+                                <xs:element name="Segundo_Nombre88Persona_FisicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Fecha_de_Nacimiento88Persona_FisicaExt" type="xs:dateTime" nillable="true" minOccurs="0" />
+                                <xs:element name="Nacionalidad88Persona_FisicaExt">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="Afganistán"/>
+                                      <xs:enumeration value="Albania"/>
+                                      <xs:enumeration value="Alemania"/>
+                                      <xs:enumeration value="Andorra"/>
+                                      <xs:enumeration value="Angola"/>
+                                      <xs:enumeration value="Anguilla"/>
+                                      <xs:enumeration value="Antártida"/>
+                                      <xs:enumeration value="Antigua y Barbuda"/>
+                                      <xs:enumeration value="Antillas Holandesas"/>
+                                      <xs:enumeration value="Arabia Saudita"/>
+                                      <xs:enumeration value="Argelia"/>
+                                      <xs:enumeration value="Armenia"/>
+                                      <xs:enumeration value="Aruba"/>
+                                      <xs:enumeration value="Australia"/>
+                                      <xs:enumeration value="Austria"/>
+                                      <xs:enumeration value="Azerbaiyán"/>
+                                      <xs:enumeration value="Bahamas"/>
+                                      <xs:enumeration value="Bahrein"/>
+                                      <xs:enumeration value="Bangladesh"/>
+                                      <xs:enumeration value="Barbados"/>
+                                      <xs:enumeration value="Bélgica"/>
+                                      <xs:enumeration value="Belice"/>
+                                      <xs:enumeration value="Benín"/>
+                                      <xs:enumeration value="Bermudas"/>
+                                      <xs:enumeration value="Bielorrusia"/>
+                                      <xs:enumeration value="Bolivia"/>
+                                      <xs:enumeration value="Bosnia-Herzegovina"/>
+                                      <xs:enumeration value="Botswana"/>
+                                      <xs:enumeration value="Brasil"/>
+                                      <xs:enumeration value="Brunei Darussalam"/>
+                                      <xs:enumeration value="Bulgaria"/>
+                                      <xs:enumeration value="Burkina Faso"/>
+                                      <xs:enumeration value="Burundi"/>
+                                      <xs:enumeration value="Bután"/>
+                                      <xs:enumeration value="Cabo Verde"/>
+                                      <xs:enumeration value="Camboya"/>
+                                      <xs:enumeration value="Camerún"/>
+                                      <xs:enumeration value="Canadá"/>
+                                      <xs:enumeration value="Chad"/>
+                                      <xs:enumeration value="Chile"/>
+                                      <xs:enumeration value="China"/>
+                                      <xs:enumeration value="Chipre"/>
+                                      <xs:enumeration value="Ciudad del Vaticano"/>
+                                      <xs:enumeration value="Colombia"/>
+                                      <xs:enumeration value="Comores"/>
+                                      <xs:enumeration value="Corea del Norte"/>
+                                      <xs:enumeration value="Corea del Sur"/>
+                                      <xs:enumeration value="Costa de Marfil"/>
+                                      <xs:enumeration value="Costa Rica"/>
+                                      <xs:enumeration value="Croacia"/>
+                                      <xs:enumeration value="Cuba"/>
+                                      <xs:enumeration value="Dinamarca"/>
+                                      <xs:enumeration value="Djibouti, Yibuti"/>
+                                      <xs:enumeration value="Dominica"/>
+                                      <xs:enumeration value="Dominicana, República"/>
+                                      <xs:enumeration value="Ecuador"/>
+                                      <xs:enumeration value="Egipto"/>
+                                      <xs:enumeration value="El Salvador"/>
+                                      <xs:enumeration value="Emiratos Árabes Unidos"/>
+                                      <xs:enumeration value="Eritrea"/>
+                                      <xs:enumeration value="Eslovaquia"/>
+                                      <xs:enumeration value="Eslovenia"/>
+                                      <xs:enumeration value="España"/>
+                                      <xs:enumeration value="Estados Unidos"/>
+                                      <xs:enumeration value="Estonia"/>
+                                      <xs:enumeration value="Etiopía"/>
+                                      <xs:enumeration value="Federación Rusa"/>
+                                      <xs:enumeration value="Filipinas"/>
+                                      <xs:enumeration value="Finlandia"/>
+                                      <xs:enumeration value="Fiyi"/>
+                                      <xs:enumeration value="Francia"/>
+                                      <xs:enumeration value="Gabón"/>
+                                      <xs:enumeration value="Gambia"/>
+                                      <xs:enumeration value="Georgia"/>
+                                      <xs:enumeration value="Ghana"/>
+                                      <xs:enumeration value="Gibraltar"/>
+                                      <xs:enumeration value="Gran Bretaña"/>
+                                      <xs:enumeration value="Granada"/>
+                                      <xs:enumeration value="Grecia"/>
+                                      <xs:enumeration value="Groenlandia"/>
+                                      <xs:enumeration value="Guadalupe"/>
+                                      <xs:enumeration value="Guam"/>
+                                      <xs:enumeration value="Guatemala"/>
+                                      <xs:enumeration value="Guayana Francesa"/>
+                                      <xs:enumeration value="Guernsey"/>
+                                      <xs:enumeration value="Guinea Bissau"/>
+                                      <xs:enumeration value="Guinea Ecuatorial"/>
+                                      <xs:enumeration value="Guyana"/>
+                                      <xs:enumeration value="Haití"/>
+                                      <xs:enumeration value="Honduras"/>
+                                      <xs:enumeration value="Hong Kong"/>
+                                      <xs:enumeration value="Hungría"/>
+                                      <xs:enumeration value="India"/>
+                                      <xs:enumeration value="Indonesia"/>
+                                      <xs:enumeration value="Irán"/>
+                                      <xs:enumeration value="Iraq"/>
+                                      <xs:enumeration value="Irlanda"/>
+                                      <xs:enumeration value="Isla Ascension"/>
+                                      <xs:enumeration value="Isla Bouvet"/>
+                                      <xs:enumeration value="Isla De Navidad, Isla Christmas"/>
+                                      <xs:enumeration value="Isla Jan Mayen y Archipiélago de Svalbard"/>
+                                      <xs:enumeration value="Isla Man"/>
+                                      <xs:enumeration value="Isla Pitcairn"/>
+                                      <xs:enumeration value="Islandia"/>
+                                      <xs:enumeration value="Islas Caimán"/>
+                                      <xs:enumeration value="Islas Cocos"/>
+                                      <xs:enumeration value="Islas Cook"/>
+                                      <xs:enumeration value="Islas de Heard y McDonald"/>
+                                      <xs:enumeration value="Islas Feroe"/>
+                                      <xs:enumeration value="Islas Malvinas"/>
+                                      <xs:enumeration value="Islas Marshall"/>
+                                      <xs:enumeration value="Islas Salomón"/>
+                                      <xs:enumeration value="Islas Turcas y Caicos"/>
+                                      <xs:enumeration value="Islas Virgenes Americanas"/>
+                                      <xs:enumeration value="Islas Virgenes Británicas"/>
+                                      <xs:enumeration value="Israel"/>
+                                      <xs:enumeration value="Italia"/>
+                                      <xs:enumeration value="Jamaica"/>
+                                      <xs:enumeration value="Japón"/>
+                                      <xs:enumeration value="Jersey"/>
+                                      <xs:enumeration value="Jordania"/>
+                                      <xs:enumeration value="Kazajstán"/>
+                                      <xs:enumeration value="Kenia"/>
+                                      <xs:enumeration value="Kirguistán"/>
+                                      <xs:enumeration value="Kiribati"/>
+                                      <xs:enumeration value="Kuwait"/>
+                                      <xs:enumeration value="Laos"/>
+                                      <xs:enumeration value="Lesotho"/>
+                                      <xs:enumeration value="Letonia"/>
+                                      <xs:enumeration value="Líbano"/>
+                                      <xs:enumeration value="Liberia"/>
+                                      <xs:enumeration value="Libia"/>
+                                      <xs:enumeration value="Liechtenstein"/>
+                                      <xs:enumeration value="Lituania"/>
+                                      <xs:enumeration value="Luxemburgo"/>
+                                      <xs:enumeration value="Macao"/>
+                                      <xs:enumeration value="Macedonia"/>
+                                      <xs:enumeration value="Madagascar"/>
+                                      <xs:enumeration value="Malasia"/>
+                                      <xs:enumeration value="Malawi"/>
+                                      <xs:enumeration value="Maldivas"/>
+                                      <xs:enumeration value="Malí"/>
+                                      <xs:enumeration value="Malta"/>
+                                      <xs:enumeration value="Marianas del Norte"/>
+                                      <xs:enumeration value="Marruecos"/>
+                                      <xs:enumeration value="Martinica"/>
+                                      <xs:enumeration value="Mauricio"/>
+                                      <xs:enumeration value="Mauritania"/>
+                                      <xs:enumeration value="Mayotte"/>
+                                      <xs:enumeration value="México"/>
+                                      <xs:enumeration value="Micronesia, Estados Federados de"/>
+                                      <xs:enumeration value="Moldavia"/>
+                                      <xs:enumeration value="Mónaco"/>
+                                      <xs:enumeration value="Mongolia"/>
+                                      <xs:enumeration value="Montenegro"/>
+                                      <xs:enumeration value="Montserrat"/>
+                                      <xs:enumeration value="Mozambique"/>
+                                      <xs:enumeration value="Myanmar, Birmania"/>
+                                      <xs:enumeration value="Namibia"/>
+                                      <xs:enumeration value="Nauru"/>
+                                      <xs:enumeration value="Nepal"/>
+                                      <xs:enumeration value="Nicaragua"/>
+                                      <xs:enumeration value="Niger"/>
+                                      <xs:enumeration value="Nigeria"/>
+                                      <xs:enumeration value="Niue"/>
+                                      <xs:enumeration value="Norfolk Island"/>
+                                      <xs:enumeration value="Noruega"/>
+                                      <xs:enumeration value="Nueva Caledonia"/>
+                                      <xs:enumeration value="Nueva Zelanda"/>
+                                      <xs:enumeration value="Omán"/>
+                                      <xs:enumeration value="Países Bajos, Holanda"/>
+                                      <xs:enumeration value="Pakistán"/>
+                                      <xs:enumeration value="Palau"/>
+                                      <xs:enumeration value="Palestina"/>
+                                      <xs:enumeration value="Panamá"/>
+                                      <xs:enumeration value="Papúa-Nueva Guinea"/>
+                                      <xs:enumeration value="Paraguay"/>
+                                      <xs:enumeration value="Perú"/>
+                                      <xs:enumeration value="Polinesia Francesa"/>
+                                      <xs:enumeration value="Polonia"/>
+                                      <xs:enumeration value="Portugal"/>
+                                      <xs:enumeration value="Puerto Rico"/>
+                                      <xs:enumeration value="Qatar"/>
+                                      <xs:enumeration value="Reino Unido"/>
+                                      <xs:enumeration value="República Centroafricana"/>
+                                      <xs:enumeration value="República Checa"/>
+                                      <xs:enumeration value="República del Congo"/>
+                                      <xs:enumeration value="República Democrática del Congo"/>
+                                      <xs:enumeration value="República Guinea"/>
+                                      <xs:enumeration value="Reunión"/>
+                                      <xs:enumeration value="Ruanda"/>
+                                      <xs:enumeration value="Rumanía"/>
+                                      <xs:enumeration value="Sáhara Occidental"/>
+                                      <xs:enumeration value="Samoa"/>
+                                      <xs:enumeration value="Samoa Americana"/>
+                                      <xs:enumeration value="San Cristobal y Nevis"/>
+                                      <xs:enumeration value="San Marino"/>
+                                      <xs:enumeration value="San Pedro y Miquelón"/>
+                                      <xs:enumeration value="San Tomé y Príncipe"/>
+                                      <xs:enumeration value="San Vincente y Granadinas"/>
+                                      <xs:enumeration value="Santa Elena"/>
+                                      <xs:enumeration value="Santa Lucía"/>
+                                      <xs:enumeration value="Santa Sede, Vaticano, Ciudad del Vaticano"/>
+                                      <xs:enumeration value="Senegal"/>
+                                      <xs:enumeration value="Serbia"/>
+                                      <xs:enumeration value="Seychelles"/>
+                                      <xs:enumeration value="Sierra Leona"/>
+                                      <xs:enumeration value="Singapur"/>
+                                      <xs:enumeration value="Siria"/>
+                                      <xs:enumeration value="Somalia"/>
+                                      <xs:enumeration value="Sri Lanka"/>
+                                      <xs:enumeration value="Sudáfrica"/>
+                                      <xs:enumeration value="Sudán"/>
+                                      <xs:enumeration value="Sudo Georgia y las Islas Sandwich del Sur"/>
+                                      <xs:enumeration value="Suecia"/>
+                                      <xs:enumeration value="Suiza"/>
+                                      <xs:enumeration value="Surinam"/>
+                                      <xs:enumeration value="Swazilandia"/>
+                                      <xs:enumeration value="Tadjikistan"/>
+                                      <xs:enumeration value="Tailandia"/>
+                                      <xs:enumeration value="Taiwan"/>
+                                      <xs:enumeration value="Tanzania"/>
+                                      <xs:enumeration value="Territorio Británico del Océano Indico"/>
+                                      <xs:enumeration value="Tíbet"/>
+                                      <xs:enumeration value="Timor Oriental"/>
+                                      <xs:enumeration value="Togo"/>
+                                      <xs:enumeration value="Tokelau"/>
+                                      <xs:enumeration value="Tonga"/>
+                                      <xs:enumeration value="Trinidad y Tobago"/>
+                                      <xs:enumeration value="Túnez"/>
+                                      <xs:enumeration value="Turkmenistan"/>
+                                      <xs:enumeration value="Turquía"/>
+                                      <xs:enumeration value="Tuvalu"/>
+                                      <xs:enumeration value="Ucrania"/>
+                                      <xs:enumeration value="Uganda"/>
+                                      <xs:enumeration value="Uruguay"/>
+                                      <xs:enumeration value="Uzbekistán"/>
+                                      <xs:enumeration value="Vanuatu"/>
+                                      <xs:enumeration value="Venezuela"/>
+                                      <xs:enumeration value="Vietnam"/>
+                                      <xs:enumeration value="Wallis y Futuna"/>
+                                      <xs:enumeration value="Yemen"/>
+                                      <xs:enumeration value="Zaire"/>
+                                      <xs:enumeration value="Zambia"/>
+                                      <xs:enumeration value="Zimbabwe"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="CUIT_CUIL_CDI88Persona_FisicaExt" default="99\-99999999\-9" type="xs:string" nillable="true" minOccurs="0" >
+                                  <xs:annotation>
+                                    <xs:documentation source="ValidationExpression">(^\d{2}\-?\d{8}\-?\d{1}$)</xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Tipo_Identificador_Tributario88Persona_FisicaExt" type="xs:string" />
+                                <xs:element name="Nro_Identificaci93n_Tributaria88Persona_FisicaExt" type="xs:string" />
+                                <xs:element name="Calle88Persona_FisicaExt" type="xs:string" nillable="true" minOccurs="0" />
+                                <xs:element name="Nro88Persona_FisicaExt" type="xs:int" nillable="true" minOccurs="0" />
+                                <xs:element name="Piso88Persona_FisicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Departamento88Persona_FisicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Localidad_o_Ciudad88Persona_FisicaExt" type="xs:string" nillable="true" minOccurs="0" />
+                                <xs:element name="C93digo_Postal88Persona_FisicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                <xs:element name="Provincia88Persona_FisicaExt" type="xs:string" nillable="true" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation source="otrasopciones">
+                                      <xs:enumeration value="CABA"/>
+                                      <xs:enumeration value="Buenos Aires"/>
+                                      <xs:enumeration value="Catamarca"/>
+                                      <xs:enumeration value="Córdoba"/>
+                                      <xs:enumeration value="Corrientes"/>
+                                      <xs:enumeration value="Chaco"/>
+                                      <xs:enumeration value="Chubut"/>
+                                      <xs:enumeration value="Entre Ríos"/>
+                                      <xs:enumeration value="Formosa"/>
+                                      <xs:enumeration value="Jujuy"/>
+                                      <xs:enumeration value="La Pampa"/>
+                                      <xs:enumeration value="La Rioja"/>
+                                      <xs:enumeration value="Mendoza"/>
+                                      <xs:enumeration value="Misiones"/>
+                                      <xs:enumeration value="Neuquén"/>
+                                      <xs:enumeration value="Río Negro"/>
+                                      <xs:enumeration value="Salta"/>
+                                      <xs:enumeration value="San Juan"/>
+                                      <xs:enumeration value="San Luis"/>
+                                      <xs:enumeration value="Santa Cruz"/>
+                                      <xs:enumeration value="Santa Fé"/>
+                                      <xs:enumeration value="Santiago Del Estero"/>
+                                      <xs:enumeration value="Tucumán"/>
+                                      <xs:enumeration value="Tierra del Fuego"/>
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                                <xs:element name="Pa92s88Persona_FisicaExt" nillable="true" minOccurs="0" >
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="Argentina"/>
+                                      <xs:enumeration value="Afganistán"/>
+                                      <xs:enumeration value="Albania"/>
+                                      <xs:enumeration value="Alemania"/>
+                                      <xs:enumeration value="Andorra"/>
+                                      <xs:enumeration value="Angola"/>
+                                      <xs:enumeration value="Anguilla"/>
+                                      <xs:enumeration value="Antártida"/>
+                                      <xs:enumeration value="Antigua y Barbuda"/>
+                                      <xs:enumeration value="Antillas Holandesas"/>
+                                      <xs:enumeration value="Arabia Saudita"/>
+                                      <xs:enumeration value="Argelia"/>
+                                      <xs:enumeration value="Armenia"/>
+                                      <xs:enumeration value="Aruba"/>
+                                      <xs:enumeration value="Australia"/>
+                                      <xs:enumeration value="Austria"/>
+                                      <xs:enumeration value="Azerbaiyán"/>
+                                      <xs:enumeration value="Bahamas"/>
+                                      <xs:enumeration value="Bahrein"/>
+                                      <xs:enumeration value="Bangladesh"/>
+                                      <xs:enumeration value="Barbados"/>
+                                      <xs:enumeration value="Bélgica"/>
+                                      <xs:enumeration value="Belice"/>
+                                      <xs:enumeration value="Benín"/>
+                                      <xs:enumeration value="Bermudas"/>
+                                      <xs:enumeration value="Bielorrusia"/>
+                                      <xs:enumeration value="Bolivia"/>
+                                      <xs:enumeration value="Bosnia-Herzegovina"/>
+                                      <xs:enumeration value="Botswana"/>
+                                      <xs:enumeration value="Brasil"/>
+                                      <xs:enumeration value="Brunei Darussalam"/>
+                                      <xs:enumeration value="Bulgaria"/>
+                                      <xs:enumeration value="Burkina Faso"/>
+                                      <xs:enumeration value="Burundi"/>
+                                      <xs:enumeration value="Bután"/>
+                                      <xs:enumeration value="Cabo Verde"/>
+                                      <xs:enumeration value="Camboya"/>
+                                      <xs:enumeration value="Camerún"/>
+                                      <xs:enumeration value="Canadá"/>
+                                      <xs:enumeration value="Chad"/>
+                                      <xs:enumeration value="Chile"/>
+                                      <xs:enumeration value="China"/>
+                                      <xs:enumeration value="Chipre"/>
+                                      <xs:enumeration value="Ciudad del Vaticano"/>
+                                      <xs:enumeration value="Colombia"/>
+                                      <xs:enumeration value="Comores"/>
+                                      <xs:enumeration value="Corea del Norte"/>
+                                      <xs:enumeration value="Corea del Sur"/>
+                                      <xs:enumeration value="Costa de Marfil"/>
+                                      <xs:enumeration value="Costa Rica"/>
+                                      <xs:enumeration value="Croacia"/>
+                                      <xs:enumeration value="Cuba"/>
+                                      <xs:enumeration value="Dinamarca"/>
+                                      <xs:enumeration value="Djibouti, Yibuti"/>
+                                      <xs:enumeration value="Dominica"/>
+                                      <xs:enumeration value="Dominicana, República"/>
+                                      <xs:enumeration value="Ecuador"/>
+                                      <xs:enumeration value="Egipto"/>
+                                      <xs:enumeration value="El Salvador"/>
+                                      <xs:enumeration value="Emiratos Árabes Unidos"/>
+                                      <xs:enumeration value="Eritrea"/>
+                                      <xs:enumeration value="Eslovaquia"/>
+                                      <xs:enumeration value="Eslovenia"/>
+                                      <xs:enumeration value="España"/>
+                                      <xs:enumeration value="Estados Unidos"/>
+                                      <xs:enumeration value="Estonia"/>
+                                      <xs:enumeration value="Etiopía"/>
+                                      <xs:enumeration value="Federación Rusa"/>
+                                      <xs:enumeration value="Filipinas"/>
+                                      <xs:enumeration value="Finlandia"/>
+                                      <xs:enumeration value="Fiyi"/>
+                                      <xs:enumeration value="Francia"/>
+                                      <xs:enumeration value="Gabón"/>
+                                      <xs:enumeration value="Gambia"/>
+                                      <xs:enumeration value="Georgia"/>
+                                      <xs:enumeration value="Ghana"/>
+                                      <xs:enumeration value="Gibraltar"/>
+                                      <xs:enumeration value="Gran Bretaña"/>
+                                      <xs:enumeration value="Granada"/>
+                                      <xs:enumeration value="Grecia"/>
+                                      <xs:enumeration value="Groenlandia"/>
+                                      <xs:enumeration value="Guadalupe"/>
+                                      <xs:enumeration value="Guam"/>
+                                      <xs:enumeration value="Guatemala"/>
+                                      <xs:enumeration value="Guayana Francesa"/>
+                                      <xs:enumeration value="Guernsey"/>
+                                      <xs:enumeration value="Guinea Bissau"/>
+                                      <xs:enumeration value="Guinea Ecuatorial"/>
+                                      <xs:enumeration value="Guyana"/>
+                                      <xs:enumeration value="Haití"/>
+                                      <xs:enumeration value="Honduras"/>
+                                      <xs:enumeration value="Hong Kong"/>
+                                      <xs:enumeration value="Hungría"/>
+                                      <xs:enumeration value="India"/>
+                                      <xs:enumeration value="Indonesia"/>
+                                      <xs:enumeration value="Irán"/>
+                                      <xs:enumeration value="Iraq"/>
+                                      <xs:enumeration value="Irlanda"/>
+                                      <xs:enumeration value="Isla Ascension"/>
+                                      <xs:enumeration value="Isla Bouvet"/>
+                                      <xs:enumeration value="Isla De Navidad, Isla Christmas"/>
+                                      <xs:enumeration value="Isla Jan Mayen y Archipiélago de Svalbard"/>
+                                      <xs:enumeration value="Isla Man"/>
+                                      <xs:enumeration value="Isla Pitcairn"/>
+                                      <xs:enumeration value="Islandia"/>
+                                      <xs:enumeration value="Islas Caimán"/>
+                                      <xs:enumeration value="Islas Cocos"/>
+                                      <xs:enumeration value="Islas Cook"/>
+                                      <xs:enumeration value="Islas de Heard y McDonald"/>
+                                      <xs:enumeration value="Islas Feroe"/>
+                                      <xs:enumeration value="Islas Malvinas"/>
+                                      <xs:enumeration value="Islas Marshall"/>
+                                      <xs:enumeration value="Islas Salomón"/>
+                                      <xs:enumeration value="Islas Turcas y Caicos"/>
+                                      <xs:enumeration value="Islas Virgenes Americanas"/>
+                                      <xs:enumeration value="Islas Virgenes Británicas"/>
+                                      <xs:enumeration value="Israel"/>
+                                      <xs:enumeration value="Italia"/>
+                                      <xs:enumeration value="Jamaica"/>
+                                      <xs:enumeration value="Japón"/>
+                                      <xs:enumeration value="Jersey"/>
+                                      <xs:enumeration value="Jordania"/>
+                                      <xs:enumeration value="Kazajstán"/>
+                                      <xs:enumeration value="Kenia"/>
+                                      <xs:enumeration value="Kirguistán"/>
+                                      <xs:enumeration value="Kiribati"/>
+                                      <xs:enumeration value="Kuwait"/>
+                                      <xs:enumeration value="Laos"/>
+                                      <xs:enumeration value="Lesotho"/>
+                                      <xs:enumeration value="Letonia"/>
+                                      <xs:enumeration value="Líbano"/>
+                                      <xs:enumeration value="Liberia"/>
+                                      <xs:enumeration value="Libia"/>
+                                      <xs:enumeration value="Liechtenstein"/>
+                                      <xs:enumeration value="Lituania"/>
+                                      <xs:enumeration value="Luxemburgo"/>
+                                      <xs:enumeration value="Macao"/>
+                                      <xs:enumeration value="Macedonia"/>
+                                      <xs:enumeration value="Madagascar"/>
+                                      <xs:enumeration value="Malasia"/>
+                                      <xs:enumeration value="Malawi"/>
+                                      <xs:enumeration value="Maldivas"/>
+                                      <xs:enumeration value="Malí"/>
+                                      <xs:enumeration value="Malta"/>
+                                      <xs:enumeration value="Marianas del Norte"/>
+                                      <xs:enumeration value="Marruecos"/>
+                                      <xs:enumeration value="Martinica"/>
+                                      <xs:enumeration value="Mauricio"/>
+                                      <xs:enumeration value="Mauritania"/>
+                                      <xs:enumeration value="Mayotte"/>
+                                      <xs:enumeration value="México"/>
+                                      <xs:enumeration value="Micronesia, Estados Federados de"/>
+                                      <xs:enumeration value="Moldavia"/>
+                                      <xs:enumeration value="Mónaco"/>
+                                      <xs:enumeration value="Mongolia"/>
+                                      <xs:enumeration value="Montenegro"/>
+                                      <xs:enumeration value="Montserrat"/>
+                                      <xs:enumeration value="Mozambique"/>
+                                      <xs:enumeration value="Myanmar, Birmania"/>
+                                      <xs:enumeration value="Namibia"/>
+                                      <xs:enumeration value="Nauru"/>
+                                      <xs:enumeration value="Nepal"/>
+                                      <xs:enumeration value="Nicaragua"/>
+                                      <xs:enumeration value="Niger"/>
+                                      <xs:enumeration value="Nigeria"/>
+                                      <xs:enumeration value="Niue"/>
+                                      <xs:enumeration value="Norfolk Island"/>
+                                      <xs:enumeration value="Noruega"/>
+                                      <xs:enumeration value="Nueva Caledonia"/>
+                                      <xs:enumeration value="Nueva Zelanda"/>
+                                      <xs:enumeration value="Omán"/>
+                                      <xs:enumeration value="Países Bajos, Holanda"/>
+                                      <xs:enumeration value="Pakistán"/>
+                                      <xs:enumeration value="Palau"/>
+                                      <xs:enumeration value="Palestina"/>
+                                      <xs:enumeration value="Panamá"/>
+                                      <xs:enumeration value="Papúa-Nueva Guinea"/>
+                                      <xs:enumeration value="Paraguay"/>
+                                      <xs:enumeration value="Perú"/>
+                                      <xs:enumeration value="Polinesia Francesa"/>
+                                      <xs:enumeration value="Polonia"/>
+                                      <xs:enumeration value="Portugal"/>
+                                      <xs:enumeration value="Puerto Rico"/>
+                                      <xs:enumeration value="Qatar"/>
+                                      <xs:enumeration value="Reino Unido"/>
+                                      <xs:enumeration value="República Centroafricana"/>
+                                      <xs:enumeration value="República Checa"/>
+                                      <xs:enumeration value="República del Congo"/>
+                                      <xs:enumeration value="República Democrática del Congo"/>
+                                      <xs:enumeration value="República Guinea"/>
+                                      <xs:enumeration value="Reunión"/>
+                                      <xs:enumeration value="Ruanda"/>
+                                      <xs:enumeration value="Rumanía"/>
+                                      <xs:enumeration value="Sáhara Occidental"/>
+                                      <xs:enumeration value="Samoa"/>
+                                      <xs:enumeration value="Samoa Americana"/>
+                                      <xs:enumeration value="San Cristobal y Nevis"/>
+                                      <xs:enumeration value="San Marino"/>
+                                      <xs:enumeration value="San Pedro y Miquelón"/>
+                                      <xs:enumeration value="San Tomé y Príncipe"/>
+                                      <xs:enumeration value="San Vincente y Granadinas"/>
+                                      <xs:enumeration value="Santa Elena"/>
+                                      <xs:enumeration value="Santa Lucía"/>
+                                      <xs:enumeration value="Santa Sede, Vaticano, Ciudad del Vaticano"/>
+                                      <xs:enumeration value="Senegal"/>
+                                      <xs:enumeration value="Serbia"/>
+                                      <xs:enumeration value="Seychelles"/>
+                                      <xs:enumeration value="Sierra Leona"/>
+                                      <xs:enumeration value="Singapur"/>
+                                      <xs:enumeration value="Siria"/>
+                                      <xs:enumeration value="Somalia"/>
+                                      <xs:enumeration value="Sri Lanka"/>
+                                      <xs:enumeration value="Sudáfrica"/>
+                                      <xs:enumeration value="Sudán"/>
+                                      <xs:enumeration value="Sudo Georgia y las Islas Sandwich del Sur"/>
+                                      <xs:enumeration value="Suecia"/>
+                                      <xs:enumeration value="Suiza"/>
+                                      <xs:enumeration value="Surinam"/>
+                                      <xs:enumeration value="Swazilandia"/>
+                                      <xs:enumeration value="Tadjikistan"/>
+                                      <xs:enumeration value="Tailandia"/>
+                                      <xs:enumeration value="Taiwan"/>
+                                      <xs:enumeration value="Tanzania"/>
+                                      <xs:enumeration value="Territorio Británico del Océano Indico"/>
+                                      <xs:enumeration value="Tíbet"/>
+                                      <xs:enumeration value="Timor Oriental"/>
+                                      <xs:enumeration value="Togo"/>
+                                      <xs:enumeration value="Tokelau"/>
+                                      <xs:enumeration value="Tonga"/>
+                                      <xs:enumeration value="Trinidad y Tobago"/>
+                                      <xs:enumeration value="Túnez"/>
+                                      <xs:enumeration value="Turkmenistan"/>
+                                      <xs:enumeration value="Turquía"/>
+                                      <xs:enumeration value="Tuvalu"/>
+                                      <xs:enumeration value="Ucrania"/>
+                                      <xs:enumeration value="Uganda"/>
+                                      <xs:enumeration value="Uruguay"/>
+                                      <xs:enumeration value="Uzbekistán"/>
+                                      <xs:enumeration value="Vanuatu"/>
+                                      <xs:enumeration value="Venezuela"/>
+                                      <xs:enumeration value="Vietnam"/>
+                                      <xs:enumeration value="Wallis y Futuna"/>
+                                      <xs:enumeration value="Yemen"/>
+                                      <xs:enumeration value="Zaire"/>
+                                      <xs:enumeration value="Zambia"/>
+                                      <xs:enumeration value="Zimbabwe"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="N94mero_de_Cuenta_o_Usuario_en_Plataforma_Virtual88Persona_FisicaExt" type="xs:string" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Persona_Jur92dica_que_Oper93_con_Monedas_Virtual" nillable="true" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation source="funcion">ValidarCUIT|CUIT_CDI88Persona_Juridica</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="Rol_de_la_Persona_en_la_Operaci93n88Persona_Juridica">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string">
+                                            <xs:enumeration value="Comprador"/>
+                                            <xs:enumeration value="Vendedor"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                        <xs:element name="Denominaci93n" type="xs:string" />
+                                        <xs:element name="CUIT_CDI88Persona_Juridica" default="99\-99999999\-9" type="xs:string" >
+                                            <xs:annotation>
+                                                <xs:documentation source="ValidationExpression">(^\d{2}\-?\d{8}\-?\d{1}$)</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="Calle88Persona_Juridica" type="xs:string" />
+                                        <xs:element name="Nro88Persona_Juridica" type="xs:int" />
+                                        <xs:element name="Piso88Persona_Juridica" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Departamento88Persona_Juridica" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Localidad88Persona_Juridica" type="xs:string" />
+                                        <xs:element name="C93digo_Postal88Persona_Juridica" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Provincia88Persona_Juridica">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="CABA"/>
+                                                    <xs:enumeration value="Buenos Aires"/>
+                                                    <xs:enumeration value="Catamarca"/>
+                                                    <xs:enumeration value="Córdoba"/>
+                                                    <xs:enumeration value="Corrientes"/>
+                                                    <xs:enumeration value="Chaco"/>
+                                                    <xs:enumeration value="Chubut"/>
+                                                    <xs:enumeration value="Entre Ríos"/>
+                                                    <xs:enumeration value="Formosa"/>
+                                                    <xs:enumeration value="Jujuy"/>
+                                                    <xs:enumeration value="La Pampa"/>
+                                                    <xs:enumeration value="La Rioja"/>
+                                                    <xs:enumeration value="Mendoza"/>
+                                                    <xs:enumeration value="Misiones"/>
+                                                    <xs:enumeration value="Neuquén"/>
+                                                    <xs:enumeration value="Río Negro"/>
+                                                    <xs:enumeration value="Salta"/>
+                                                    <xs:enumeration value="San Juan"/>
+                                                    <xs:enumeration value="San Luis"/>
+                                                    <xs:enumeration value="Santa Cruz"/>
+                                                    <xs:enumeration value="Santa Fé"/>
+                                                    <xs:enumeration value="Santiago Del Estero"/>
+                                                    <xs:enumeration value="Tucumán"/>
+                                                    <xs:enumeration value="Tierra del Fuego"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="Pa92s88Persona_Juridica" >
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="Argentina"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="N94mero_de_Cuenta_o_Usuario_en_Plataforma_Virtual88Persona_Juridica" type="xs:string" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                          <xs:element name="Persona_Jur92dica_Extranjera_que_Oper93_con_Monedas_Virtual" nillable="true" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                  <xs:documentation source="funcion">ValidarCUIT|CUIT_CDI88Persona_JuridicaExt</xs:documentation>
+                               </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="Rol_de_la_Persona_en_la_Operaci93n88Persona_JuridicaExt">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string">
+                                            <xs:enumeration value="Comprador"/>
+                                            <xs:enumeration value="Vendedor"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                        <xs:element name="Denominaci93n88Persona_JuridicaExt" type="xs:string" />
+                                        <xs:element name="CUIT_CDI88Persona_JuridicaExt" default="99\-99999999\-9" type="xs:string" nillable="true" minOccurs="0">
+                                        <xs:annotation>
+                                          <xs:documentation source="ValidationExpression">(^\d{2}\-?\d{8}\-?\d{1}$)</xs:documentation>
+                                        </xs:annotation>
+                                      </xs:element>
+                                        <xs:element name="Pa92s_Donde_se_Encuentra_Radicada_la_Sociedad88Persona_JuridicaExt">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string">
+                                            <xs:enumeration value="Afganistán"/>
+                                            <xs:enumeration value="Albania"/>
+                                            <xs:enumeration value="Alemania"/>
+                                            <xs:enumeration value="Andorra"/>
+                                            <xs:enumeration value="Angola"/>
+                                            <xs:enumeration value="Anguilla"/>
+                                            <xs:enumeration value="Antártida"/>
+                                            <xs:enumeration value="Antigua y Barbuda"/>
+                                            <xs:enumeration value="Antillas Holandesas"/>
+                                            <xs:enumeration value="Arabia Saudita"/>
+                                            <xs:enumeration value="Argelia"/>
+                                            <xs:enumeration value="Armenia"/>
+                                            <xs:enumeration value="Aruba"/>
+                                            <xs:enumeration value="Australia"/>
+                                            <xs:enumeration value="Austria"/>
+                                            <xs:enumeration value="Azerbaiyán"/>
+                                            <xs:enumeration value="Bahamas"/>
+                                            <xs:enumeration value="Bahrein"/>
+                                            <xs:enumeration value="Bangladesh"/>
+                                            <xs:enumeration value="Barbados"/>
+                                            <xs:enumeration value="Bélgica"/>
+                                            <xs:enumeration value="Belice"/>
+                                            <xs:enumeration value="Benín"/>
+                                            <xs:enumeration value="Bermudas"/>
+                                            <xs:enumeration value="Bielorrusia"/>
+                                            <xs:enumeration value="Bolivia"/>
+                                            <xs:enumeration value="Bosnia-Herzegovina"/>
+                                            <xs:enumeration value="Botswana"/>
+                                            <xs:enumeration value="Brasil"/>
+                                            <xs:enumeration value="Brunei Darussalam"/>
+                                            <xs:enumeration value="Bulgaria"/>
+                                            <xs:enumeration value="Burkina Faso"/>
+                                            <xs:enumeration value="Burundi"/>
+                                            <xs:enumeration value="Bután"/>
+                                            <xs:enumeration value="Cabo Verde"/>
+                                            <xs:enumeration value="Camboya"/>
+                                            <xs:enumeration value="Camerún"/>
+                                            <xs:enumeration value="Canadá"/>
+                                            <xs:enumeration value="Chad"/>
+                                            <xs:enumeration value="Chile"/>
+                                            <xs:enumeration value="China"/>
+                                            <xs:enumeration value="Chipre"/>
+                                            <xs:enumeration value="Ciudad del Vaticano"/>
+                                            <xs:enumeration value="Colombia"/>
+                                            <xs:enumeration value="Comores"/>
+                                            <xs:enumeration value="Corea del Norte"/>
+                                            <xs:enumeration value="Corea del Sur"/>
+                                            <xs:enumeration value="Costa de Marfil"/>
+                                            <xs:enumeration value="Costa Rica"/>
+                                            <xs:enumeration value="Croacia"/>
+                                            <xs:enumeration value="Cuba"/>
+                                            <xs:enumeration value="Dinamarca"/>
+                                            <xs:enumeration value="Djibouti, Yibuti"/>
+                                            <xs:enumeration value="Dominica"/>
+                                            <xs:enumeration value="Dominicana, República"/>
+                                            <xs:enumeration value="Ecuador"/>
+                                            <xs:enumeration value="Egipto"/>
+                                            <xs:enumeration value="El Salvador"/>
+                                            <xs:enumeration value="Emiratos Árabes Unidos"/>
+                                            <xs:enumeration value="Eritrea"/>
+                                            <xs:enumeration value="Eslovaquia"/>
+                                            <xs:enumeration value="Eslovenia"/>
+                                            <xs:enumeration value="España"/>
+                                            <xs:enumeration value="Estados Unidos"/>
+                                            <xs:enumeration value="Estonia"/>
+                                            <xs:enumeration value="Etiopía"/>
+                                            <xs:enumeration value="Federación Rusa"/>
+                                            <xs:enumeration value="Filipinas"/>
+                                            <xs:enumeration value="Finlandia"/>
+                                            <xs:enumeration value="Fiyi"/>
+                                            <xs:enumeration value="Francia"/>
+                                            <xs:enumeration value="Gabón"/>
+                                            <xs:enumeration value="Gambia"/>
+                                            <xs:enumeration value="Georgia"/>
+                                            <xs:enumeration value="Ghana"/>
+                                            <xs:enumeration value="Gibraltar"/>
+                                            <xs:enumeration value="Gran Bretaña"/>
+                                            <xs:enumeration value="Granada"/>
+                                            <xs:enumeration value="Grecia"/>
+                                            <xs:enumeration value="Groenlandia"/>
+                                            <xs:enumeration value="Guadalupe"/>
+                                            <xs:enumeration value="Guam"/>
+                                            <xs:enumeration value="Guatemala"/>
+                                            <xs:enumeration value="Guayana Francesa"/>
+                                            <xs:enumeration value="Guernsey"/>
+                                            <xs:enumeration value="Guinea Bissau"/>
+                                            <xs:enumeration value="Guinea Ecuatorial"/>
+                                            <xs:enumeration value="Guyana"/>
+                                            <xs:enumeration value="Haití"/>
+                                            <xs:enumeration value="Honduras"/>
+                                            <xs:enumeration value="Hong Kong"/>
+                                            <xs:enumeration value="Hungría"/>
+                                            <xs:enumeration value="India"/>
+                                            <xs:enumeration value="Indonesia"/>
+                                            <xs:enumeration value="Irán"/>
+                                            <xs:enumeration value="Iraq"/>
+                                            <xs:enumeration value="Irlanda"/>
+                                            <xs:enumeration value="Isla Ascension"/>
+                                            <xs:enumeration value="Isla Bouvet"/>
+                                            <xs:enumeration value="Isla De Navidad, Isla Christmas"/>
+                                            <xs:enumeration value="Isla Jan Mayen y Archipiélago de Svalbard"/>
+                                            <xs:enumeration value="Isla Man"/>
+                                            <xs:enumeration value="Isla Pitcairn"/>
+                                            <xs:enumeration value="Islandia"/>
+                                            <xs:enumeration value="Islas Caimán"/>
+                                            <xs:enumeration value="Islas Cocos"/>
+                                            <xs:enumeration value="Islas Cook"/>
+                                            <xs:enumeration value="Islas de Heard y McDonald"/>
+                                            <xs:enumeration value="Islas Feroe"/>
+                                            <xs:enumeration value="Islas Malvinas"/>
+                                            <xs:enumeration value="Islas Marshall"/>
+                                            <xs:enumeration value="Islas Salomón"/>
+                                            <xs:enumeration value="Islas Turcas y Caicos"/>
+                                            <xs:enumeration value="Islas Virgenes Americanas"/>
+                                            <xs:enumeration value="Islas Virgenes Británicas"/>
+                                            <xs:enumeration value="Israel"/>
+                                            <xs:enumeration value="Italia"/>
+                                            <xs:enumeration value="Jamaica"/>
+                                            <xs:enumeration value="Japón"/>
+                                            <xs:enumeration value="Jersey"/>
+                                            <xs:enumeration value="Jordania"/>
+                                            <xs:enumeration value="Kazajstán"/>
+                                            <xs:enumeration value="Kenia"/>
+                                            <xs:enumeration value="Kirguistán"/>
+                                            <xs:enumeration value="Kiribati"/>
+                                            <xs:enumeration value="Kuwait"/>
+                                            <xs:enumeration value="Laos"/>
+                                            <xs:enumeration value="Lesotho"/>
+                                            <xs:enumeration value="Letonia"/>
+                                            <xs:enumeration value="Líbano"/>
+                                            <xs:enumeration value="Liberia"/>
+                                            <xs:enumeration value="Libia"/>
+                                            <xs:enumeration value="Liechtenstein"/>
+                                            <xs:enumeration value="Lituania"/>
+                                            <xs:enumeration value="Luxemburgo"/>
+                                            <xs:enumeration value="Macao"/>
+                                            <xs:enumeration value="Macedonia"/>
+                                            <xs:enumeration value="Madagascar"/>
+                                            <xs:enumeration value="Malasia"/>
+                                            <xs:enumeration value="Malawi"/>
+                                            <xs:enumeration value="Maldivas"/>
+                                            <xs:enumeration value="Malí"/>
+                                            <xs:enumeration value="Malta"/>
+                                            <xs:enumeration value="Marianas del Norte"/>
+                                            <xs:enumeration value="Marruecos"/>
+                                            <xs:enumeration value="Martinica"/>
+                                            <xs:enumeration value="Mauricio"/>
+                                            <xs:enumeration value="Mauritania"/>
+                                            <xs:enumeration value="Mayotte"/>
+                                            <xs:enumeration value="México"/>
+                                            <xs:enumeration value="Micronesia, Estados Federados de"/>
+                                            <xs:enumeration value="Moldavia"/>
+                                            <xs:enumeration value="Mónaco"/>
+                                            <xs:enumeration value="Mongolia"/>
+                                            <xs:enumeration value="Montenegro"/>
+                                            <xs:enumeration value="Montserrat"/>
+                                            <xs:enumeration value="Mozambique"/>
+                                            <xs:enumeration value="Myanmar, Birmania"/>
+                                            <xs:enumeration value="Namibia"/>
+                                            <xs:enumeration value="Nauru"/>
+                                            <xs:enumeration value="Nepal"/>
+                                            <xs:enumeration value="Nicaragua"/>
+                                            <xs:enumeration value="Niger"/>
+                                            <xs:enumeration value="Nigeria"/>
+                                            <xs:enumeration value="Niue"/>
+                                            <xs:enumeration value="Norfolk Island"/>
+                                            <xs:enumeration value="Noruega"/>
+                                            <xs:enumeration value="Nueva Caledonia"/>
+                                            <xs:enumeration value="Nueva Zelanda"/>
+                                            <xs:enumeration value="Omán"/>
+                                            <xs:enumeration value="Países Bajos, Holanda"/>
+                                            <xs:enumeration value="Pakistán"/>
+                                            <xs:enumeration value="Palau"/>
+                                            <xs:enumeration value="Palestina"/>
+                                            <xs:enumeration value="Panamá"/>
+                                            <xs:enumeration value="Papúa-Nueva Guinea"/>
+                                            <xs:enumeration value="Paraguay"/>
+                                            <xs:enumeration value="Perú"/>
+                                            <xs:enumeration value="Polinesia Francesa"/>
+                                            <xs:enumeration value="Polonia"/>
+                                            <xs:enumeration value="Portugal"/>
+                                            <xs:enumeration value="Puerto Rico"/>
+                                            <xs:enumeration value="Qatar"/>
+                                            <xs:enumeration value="Reino Unido"/>
+                                            <xs:enumeration value="República Centroafricana"/>
+                                            <xs:enumeration value="República Checa"/>
+                                            <xs:enumeration value="República del Congo"/>
+                                            <xs:enumeration value="República Democrática del Congo"/>
+                                            <xs:enumeration value="República Guinea"/>
+                                            <xs:enumeration value="Reunión"/>
+                                            <xs:enumeration value="Ruanda"/>
+                                            <xs:enumeration value="Rumanía"/>
+                                            <xs:enumeration value="Sáhara Occidental"/>
+                                            <xs:enumeration value="Samoa"/>
+                                            <xs:enumeration value="Samoa Americana"/>
+                                            <xs:enumeration value="San Cristobal y Nevis"/>
+                                            <xs:enumeration value="San Marino"/>
+                                            <xs:enumeration value="San Pedro y Miquelón"/>
+                                            <xs:enumeration value="San Tomé y Príncipe"/>
+                                            <xs:enumeration value="San Vincente y Granadinas"/>
+                                            <xs:enumeration value="Santa Elena"/>
+                                            <xs:enumeration value="Santa Lucía"/>
+                                            <xs:enumeration value="Santa Sede, Vaticano, Ciudad del Vaticano"/>
+                                            <xs:enumeration value="Senegal"/>
+                                            <xs:enumeration value="Serbia"/>
+                                            <xs:enumeration value="Seychelles"/>
+                                            <xs:enumeration value="Sierra Leona"/>
+                                            <xs:enumeration value="Singapur"/>
+                                            <xs:enumeration value="Siria"/>
+                                            <xs:enumeration value="Somalia"/>
+                                            <xs:enumeration value="Sri Lanka"/>
+                                            <xs:enumeration value="Sudáfrica"/>
+                                            <xs:enumeration value="Sudán"/>
+                                            <xs:enumeration value="Sudo Georgia y las Islas Sandwich del Sur"/>
+                                            <xs:enumeration value="Suecia"/>
+                                            <xs:enumeration value="Suiza"/>
+                                            <xs:enumeration value="Surinam"/>
+                                            <xs:enumeration value="Swazilandia"/>
+                                            <xs:enumeration value="Tadjikistan"/>
+                                            <xs:enumeration value="Tailandia"/>
+                                            <xs:enumeration value="Taiwan"/>
+                                            <xs:enumeration value="Tanzania"/>
+                                            <xs:enumeration value="Territorio Británico del Océano Indico"/>
+                                            <xs:enumeration value="Tíbet"/>
+                                            <xs:enumeration value="Timor Oriental"/>
+                                            <xs:enumeration value="Togo"/>
+                                            <xs:enumeration value="Tokelau"/>
+                                            <xs:enumeration value="Tonga"/>
+                                            <xs:enumeration value="Trinidad y Tobago"/>
+                                            <xs:enumeration value="Túnez"/>
+                                            <xs:enumeration value="Turkmenistan"/>
+                                            <xs:enumeration value="Turquía"/>
+                                            <xs:enumeration value="Tuvalu"/>
+                                            <xs:enumeration value="Ucrania"/>
+                                            <xs:enumeration value="Uganda"/>
+                                            <xs:enumeration value="Uruguay"/>
+                                            <xs:enumeration value="Uzbekistán"/>
+                                            <xs:enumeration value="Vanuatu"/>
+                                            <xs:enumeration value="Venezuela"/>
+                                            <xs:enumeration value="Vietnam"/>
+                                            <xs:enumeration value="Wallis y Futuna"/>
+                                            <xs:enumeration value="Yemen"/>
+                                            <xs:enumeration value="Zaire"/>
+                                            <xs:enumeration value="Zambia"/>
+                                            <xs:enumeration value="Zimbabwe"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                        <xs:element name="Tipo_Identificador_Tributario88Persona_JuridicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Nro_Identificaci93n_Tributaria88Persona_JuridicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Calle88Persona_JuridicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Nro88Persona_JuridicaExt" type="xs:int" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Piso88Persona_JuridicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Departamento88Persona_JuridicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Localidad_o_Ciudad88Persona_JuridicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="C93digo_Postal88Persona_JuridicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Provincia_o_Estado88Persona_JuridicaExt" type="xs:string" nillable="true" minOccurs="0"/>
+                                        <xs:element name="Pa92s88Persona_JuridicaExt" nillable="true" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="Afganistán"/>
+                                                    <xs:enumeration value="Albania"/>
+                                                    <xs:enumeration value="Alemania"/>
+                                                    <xs:enumeration value="Andorra"/>
+                                                    <xs:enumeration value="Angola"/>
+                                                    <xs:enumeration value="Anguilla"/>
+                                                    <xs:enumeration value="Antártida"/>
+                                                    <xs:enumeration value="Antigua y Barbuda"/>
+                                                    <xs:enumeration value="Antillas Holandesas"/>
+                                                    <xs:enumeration value="Arabia Saudita"/>
+                                                    <xs:enumeration value="Argelia"/>
+                                                    <xs:enumeration value="Armenia"/>
+                                                    <xs:enumeration value="Aruba"/>
+                                                    <xs:enumeration value="Australia"/>
+                                                    <xs:enumeration value="Austria"/>
+                                                    <xs:enumeration value="Azerbaiyán"/>
+                                                    <xs:enumeration value="Bahamas"/>
+                                                    <xs:enumeration value="Bahrein"/>
+                                                    <xs:enumeration value="Bangladesh"/>
+                                                    <xs:enumeration value="Barbados"/>
+                                                    <xs:enumeration value="Bélgica"/>
+                                                    <xs:enumeration value="Belice"/>
+                                                    <xs:enumeration value="Benín"/>
+                                                    <xs:enumeration value="Bermudas"/>
+                                                    <xs:enumeration value="Bielorrusia"/>
+                                                    <xs:enumeration value="Bolivia"/>
+                                                    <xs:enumeration value="Bosnia-Herzegovina"/>
+                                                    <xs:enumeration value="Botswana"/>
+                                                    <xs:enumeration value="Brasil"/>
+                                                    <xs:enumeration value="Brunei Darussalam"/>
+                                                    <xs:enumeration value="Bulgaria"/>
+                                                    <xs:enumeration value="Burkina Faso"/>
+                                                    <xs:enumeration value="Burundi"/>
+                                                    <xs:enumeration value="Bután"/>
+                                                    <xs:enumeration value="Cabo Verde"/>
+                                                    <xs:enumeration value="Camboya"/>
+                                                    <xs:enumeration value="Camerún"/>
+                                                    <xs:enumeration value="Canadá"/>
+                                                    <xs:enumeration value="Chad"/>
+                                                    <xs:enumeration value="Chile"/>
+                                                    <xs:enumeration value="China"/>
+                                                    <xs:enumeration value="Chipre"/>
+                                                    <xs:enumeration value="Ciudad del Vaticano"/>
+                                                    <xs:enumeration value="Colombia"/>
+                                                    <xs:enumeration value="Comores"/>
+                                                    <xs:enumeration value="Corea del Norte"/>
+                                                    <xs:enumeration value="Corea del Sur"/>
+                                                    <xs:enumeration value="Costa de Marfil"/>
+                                                    <xs:enumeration value="Costa Rica"/>
+                                                    <xs:enumeration value="Croacia"/>
+                                                    <xs:enumeration value="Cuba"/>
+                                                    <xs:enumeration value="Dinamarca"/>
+                                                    <xs:enumeration value="Djibouti, Yibuti"/>
+                                                    <xs:enumeration value="Dominica"/>
+                                                    <xs:enumeration value="Dominicana, República"/>
+                                                    <xs:enumeration value="Ecuador"/>
+                                                    <xs:enumeration value="Egipto"/>
+                                                    <xs:enumeration value="El Salvador"/>
+                                                    <xs:enumeration value="Emiratos Árabes Unidos"/>
+                                                    <xs:enumeration value="Eritrea"/>
+                                                    <xs:enumeration value="Eslovaquia"/>
+                                                    <xs:enumeration value="Eslovenia"/>
+                                                    <xs:enumeration value="España"/>
+                                                    <xs:enumeration value="Estados Unidos"/>
+                                                    <xs:enumeration value="Estonia"/>
+                                                    <xs:enumeration value="Etiopía"/>
+                                                    <xs:enumeration value="Federación Rusa"/>
+                                                    <xs:enumeration value="Filipinas"/>
+                                                    <xs:enumeration value="Finlandia"/>
+                                                    <xs:enumeration value="Fiyi"/>
+                                                    <xs:enumeration value="Francia"/>
+                                                    <xs:enumeration value="Gabón"/>
+                                                    <xs:enumeration value="Gambia"/>
+                                                    <xs:enumeration value="Georgia"/>
+                                                    <xs:enumeration value="Ghana"/>
+                                                    <xs:enumeration value="Gibraltar"/>
+                                                    <xs:enumeration value="Gran Bretaña"/>
+                                                    <xs:enumeration value="Granada"/>
+                                                    <xs:enumeration value="Grecia"/>
+                                                    <xs:enumeration value="Groenlandia"/>
+                                                    <xs:enumeration value="Guadalupe"/>
+                                                    <xs:enumeration value="Guam"/>
+                                                    <xs:enumeration value="Guatemala"/>
+                                                    <xs:enumeration value="Guayana Francesa"/>
+                                                    <xs:enumeration value="Guernsey"/>
+                                                    <xs:enumeration value="Guinea Bissau"/>
+                                                    <xs:enumeration value="Guinea Ecuatorial"/>
+                                                    <xs:enumeration value="Guyana"/>
+                                                    <xs:enumeration value="Haití"/>
+                                                    <xs:enumeration value="Honduras"/>
+                                                    <xs:enumeration value="Hong Kong"/>
+                                                    <xs:enumeration value="Hungría"/>
+                                                    <xs:enumeration value="India"/>
+                                                    <xs:enumeration value="Indonesia"/>
+                                                    <xs:enumeration value="Irán"/>
+                                                    <xs:enumeration value="Iraq"/>
+                                                    <xs:enumeration value="Irlanda"/>
+                                                    <xs:enumeration value="Isla Ascension"/>
+                                                    <xs:enumeration value="Isla Bouvet"/>
+                                                    <xs:enumeration value="Isla De Navidad, Isla Christmas"/>
+                                                    <xs:enumeration value="Isla Jan Mayen y Archipiélago de Svalbard"/>
+                                                    <xs:enumeration value="Isla Man"/>
+                                                    <xs:enumeration value="Isla Pitcairn"/>
+                                                    <xs:enumeration value="Islandia"/>
+                                                    <xs:enumeration value="Islas Caimán"/>
+                                                    <xs:enumeration value="Islas Cocos"/>
+                                                    <xs:enumeration value="Islas Cook"/>
+                                                    <xs:enumeration value="Islas de Heard y McDonald"/>
+                                                    <xs:enumeration value="Islas Feroe"/>
+                                                    <xs:enumeration value="Islas Malvinas"/>
+                                                    <xs:enumeration value="Islas Marshall"/>
+                                                    <xs:enumeration value="Islas Salomón"/>
+                                                    <xs:enumeration value="Islas Turcas y Caicos"/>
+                                                    <xs:enumeration value="Islas Virgenes Americanas"/>
+                                                    <xs:enumeration value="Islas Virgenes Británicas"/>
+                                                    <xs:enumeration value="Israel"/>
+                                                    <xs:enumeration value="Italia"/>
+                                                    <xs:enumeration value="Jamaica"/>
+                                                    <xs:enumeration value="Japón"/>
+                                                    <xs:enumeration value="Jersey"/>
+                                                    <xs:enumeration value="Jordania"/>
+                                                    <xs:enumeration value="Kazajstán"/>
+                                                    <xs:enumeration value="Kenia"/>
+                                                    <xs:enumeration value="Kirguistán"/>
+                                                    <xs:enumeration value="Kiribati"/>
+                                                    <xs:enumeration value="Kuwait"/>
+                                                    <xs:enumeration value="Laos"/>
+                                                    <xs:enumeration value="Lesotho"/>
+                                                    <xs:enumeration value="Letonia"/>
+                                                    <xs:enumeration value="Líbano"/>
+                                                    <xs:enumeration value="Liberia"/>
+                                                    <xs:enumeration value="Libia"/>
+                                                    <xs:enumeration value="Liechtenstein"/>
+                                                    <xs:enumeration value="Lituania"/>
+                                                    <xs:enumeration value="Luxemburgo"/>
+                                                    <xs:enumeration value="Macao"/>
+                                                    <xs:enumeration value="Macedonia"/>
+                                                    <xs:enumeration value="Madagascar"/>
+                                                    <xs:enumeration value="Malasia"/>
+                                                    <xs:enumeration value="Malawi"/>
+                                                    <xs:enumeration value="Maldivas"/>
+                                                    <xs:enumeration value="Malí"/>
+                                                    <xs:enumeration value="Malta"/>
+                                                    <xs:enumeration value="Marianas del Norte"/>
+                                                    <xs:enumeration value="Marruecos"/>
+                                                    <xs:enumeration value="Martinica"/>
+                                                    <xs:enumeration value="Mauricio"/>
+                                                    <xs:enumeration value="Mauritania"/>
+                                                    <xs:enumeration value="Mayotte"/>
+                                                    <xs:enumeration value="México"/>
+                                                    <xs:enumeration value="Micronesia, Estados Federados de"/>
+                                                    <xs:enumeration value="Moldavia"/>
+                                                    <xs:enumeration value="Mónaco"/>
+                                                    <xs:enumeration value="Mongolia"/>
+                                                    <xs:enumeration value="Montenegro"/>
+                                                    <xs:enumeration value="Montserrat"/>
+                                                    <xs:enumeration value="Mozambique"/>
+                                                    <xs:enumeration value="Myanmar, Birmania"/>
+                                                    <xs:enumeration value="Namibia"/>
+                                                    <xs:enumeration value="Nauru"/>
+                                                    <xs:enumeration value="Nepal"/>
+                                                    <xs:enumeration value="Nicaragua"/>
+                                                    <xs:enumeration value="Niger"/>
+                                                    <xs:enumeration value="Nigeria"/>
+                                                    <xs:enumeration value="Niue"/>
+                                                    <xs:enumeration value="Norfolk Island"/>
+                                                    <xs:enumeration value="Noruega"/>
+                                                    <xs:enumeration value="Nueva Caledonia"/>
+                                                    <xs:enumeration value="Nueva Zelanda"/>
+                                                    <xs:enumeration value="Omán"/>
+                                                    <xs:enumeration value="Países Bajos, Holanda"/>
+                                                    <xs:enumeration value="Pakistán"/>
+                                                    <xs:enumeration value="Palau"/>
+                                                    <xs:enumeration value="Palestina"/>
+                                                    <xs:enumeration value="Panamá"/>
+                                                    <xs:enumeration value="Papúa-Nueva Guinea"/>
+                                                    <xs:enumeration value="Paraguay"/>
+                                                    <xs:enumeration value="Perú"/>
+                                                    <xs:enumeration value="Polinesia Francesa"/>
+                                                    <xs:enumeration value="Polonia"/>
+                                                    <xs:enumeration value="Portugal"/>
+                                                    <xs:enumeration value="Puerto Rico"/>
+                                                    <xs:enumeration value="Qatar"/>
+                                                    <xs:enumeration value="Reino Unido"/>
+                                                    <xs:enumeration value="República Centroafricana"/>
+                                                    <xs:enumeration value="República Checa"/>
+                                                    <xs:enumeration value="República del Congo"/>
+                                                    <xs:enumeration value="República Democrática del Congo"/>
+                                                    <xs:enumeration value="República Guinea"/>
+                                                    <xs:enumeration value="Reunión"/>
+                                                    <xs:enumeration value="Ruanda"/>
+                                                    <xs:enumeration value="Rumanía"/>
+                                                    <xs:enumeration value="Sáhara Occidental"/>
+                                                    <xs:enumeration value="Samoa"/>
+                                                    <xs:enumeration value="Samoa Americana"/>
+                                                    <xs:enumeration value="San Cristobal y Nevis"/>
+                                                    <xs:enumeration value="San Marino"/>
+                                                    <xs:enumeration value="San Pedro y Miquelón"/>
+                                                    <xs:enumeration value="San Tomé y Príncipe"/>
+                                                    <xs:enumeration value="San Vincente y Granadinas"/>
+                                                    <xs:enumeration value="Santa Elena"/>
+                                                    <xs:enumeration value="Santa Lucía"/>
+                                                    <xs:enumeration value="Santa Sede, Vaticano, Ciudad del Vaticano"/>
+                                                    <xs:enumeration value="Senegal"/>
+                                                    <xs:enumeration value="Serbia"/>
+                                                    <xs:enumeration value="Seychelles"/>
+                                                    <xs:enumeration value="Sierra Leona"/>
+                                                    <xs:enumeration value="Singapur"/>
+                                                    <xs:enumeration value="Siria"/>
+                                                    <xs:enumeration value="Somalia"/>
+                                                    <xs:enumeration value="Sri Lanka"/>
+                                                    <xs:enumeration value="Sudáfrica"/>
+                                                    <xs:enumeration value="Sudán"/>
+                                                    <xs:enumeration value="Sudo Georgia y las Islas Sandwich del Sur"/>
+                                                    <xs:enumeration value="Suecia"/>
+                                                    <xs:enumeration value="Suiza"/>
+                                                    <xs:enumeration value="Surinam"/>
+                                                    <xs:enumeration value="Swazilandia"/>
+                                                    <xs:enumeration value="Tadjikistan"/>
+                                                    <xs:enumeration value="Tailandia"/>
+                                                    <xs:enumeration value="Taiwan"/>
+                                                    <xs:enumeration value="Tanzania"/>
+                                                    <xs:enumeration value="Territorio Británico del Océano Indico"/>
+                                                    <xs:enumeration value="Tíbet"/>
+                                                    <xs:enumeration value="Timor Oriental"/>
+                                                    <xs:enumeration value="Togo"/>
+                                                    <xs:enumeration value="Tokelau"/>
+                                                    <xs:enumeration value="Tonga"/>
+                                                    <xs:enumeration value="Trinidad y Tobago"/>
+                                                    <xs:enumeration value="Túnez"/>
+                                                    <xs:enumeration value="Turkmenistan"/>
+                                                    <xs:enumeration value="Turquía"/>
+                                                    <xs:enumeration value="Tuvalu"/>
+                                                    <xs:enumeration value="Ucrania"/>
+                                                    <xs:enumeration value="Uganda"/>
+                                                    <xs:enumeration value="Uruguay"/>
+                                                    <xs:enumeration value="Uzbekistán"/>
+                                                    <xs:enumeration value="Vanuatu"/>
+                                                    <xs:enumeration value="Venezuela"/>
+                                                    <xs:enumeration value="Vietnam"/>
+                                                    <xs:enumeration value="Wallis y Futuna"/>
+                                                    <xs:enumeration value="Yemen"/>
+                                                    <xs:enumeration value="Zaire"/>
+                                                    <xs:enumeration value="Zambia"/>
+                                                    <xs:enumeration value="Zimbabwe"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="N94mero_de_Cuenta_o_Usuario_en_Plataforma_Virtual88Persona_JuridicaExt" type="xs:string" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Version" use="required" type="xs:string" fixed="1.0" />
+                    </xs:complexType>
+                </xs:element>
+            <xs:element name="Rectificaci93n_Operaci93n_Original" nillable="true" minOccurs="0">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Numero_Control_Operaci93n_Original" type="xs:int" />					
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
