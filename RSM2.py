@@ -69,14 +69,27 @@ def create_input_field(element, path=""):
         label = element.name.replace('_', ' ').title()
         xsd_type = get_element_type(element)
 
-        # Determinar si el campo es obligatorio
-        is_required = (element.min_occurs is not None and element.min_occurs > 0) or not element.is_nillable()
+        # Determinar si el campo es obligatorio (manejo compatible con diferentes versiones de xmlschema)
+        is_required = True  # Por defecto asumimos que es requerido
+        try:
+            # Intenta con la nueva API (versiones recientes de xmlschema)
+            is_required = element.min_occurs > 0 if hasattr(element, 'min_occurs') else True
+        except:
+            try:
+                # Intenta con la antigua API
+                is_required = not element.is_nillable() if hasattr(element, 'is_nillable') else True
+            except:
+                is_required = True
 
         # Campos con enumeraciones (dropdowns)
-        if hasattr(element.type, 'enumeration') and element.type.enumeration:
+        if hasattr(element.type, 'enumeration') and hasattr(element.type.enumeration, '__iter__'):
             try:
-                # Convertir las enumeraciones a strings
-                options = [str(e.value) for e in element.type.enumeration]
+                # Maneja diferentes versiones de la biblioteca xmlschema
+                if hasattr(element.type.enumeration[0], 'value'):
+                    options = [str(e.value) for e in element.type.enumeration]
+                else:
+                    options = [str(e) for e in element.type.enumeration]
+                
                 default_idx = 0 if any("Elegir..." in opt for opt in options) else None
                 return st.selectbox(
                     label, 
@@ -140,7 +153,7 @@ def create_input_field(element, path=""):
             )
     except Exception as e:
         st.error(f"Error al crear campo para {element.name}: {str(e)}")
-        return None
+        return st.text_input(label if 'label' in locals() else element.name, key=field_id)
         
 def build_form(schema, element, path=""):
     """Construye formulario dinámico basado en XSD"""
