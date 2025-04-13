@@ -16,7 +16,6 @@ def get_element_type(element):
     """Obtiene el tipo de elemento XSD de manera segura"""
     if element.type.is_simple():
         base_type = str(element.type.base_type)
-        # Manejar tipos derivados como long, int, etc.
         if 'long' in base_type.lower():
             return 'long'
         elif 'int' in base_type.lower():
@@ -26,17 +25,33 @@ def get_element_type(element):
 
 def format_xml_value(value, xsd_type):
     """Formatea valores para XML según su tipo XSD"""
-    if value is None:
-        return None  # Para elementos nillable
+    if value is None or value == "":
+        return None
 
     if xsd_type in {'decimal', 'float', 'double'}:
         return f"{float(value):.2f}"
     elif xsd_type in {'long', 'int', 'integer'}:
         return str(int(value))
     elif xsd_type == 'date':
-        return value.strftime("%Y-%m-%d")
+        if isinstance(value, str):
+            try:
+                day, month, year = map(int, value.split('/'))
+                return f"{year:04d}-{month:02d}-{day:02d}"
+            except:
+                return None
+        else:
+            return value.strftime("%Y-%m-%d")
     elif xsd_type == 'dateTime':
-        return value.isoformat()
+        if isinstance(value, str):
+            try:
+                date_part, time_part = value.split(' ')
+                day, month, year = map(int, date_part.split('/'))
+                hours, minutes = map(int, time_part.split(':'))
+                return f"{year:04d}-{month:02d}-{day:02d}T{hours:02d}:{minutes:02d}:00"
+            except:
+                return None
+        else:
+            return value.isoformat()
     elif xsd_type == 'boolean':
         return str(value).lower()
     return str(value)
@@ -69,27 +84,13 @@ def create_input_field(element, path=""):
         label = element.name.replace('_', ' ').title()
         xsd_type = get_element_type(element)
 
-        # Determinar si el campo es obligatorio (manejo compatible con diferentes versiones de xmlschema)
-        is_required = True  # Por defecto asumimos que es requerido
-        try:
-            # Intenta con la nueva API (versiones recientes de xmlschema)
-            is_required = element.min_occurs > 0 if hasattr(element, 'min_occurs') else True
-        except:
-            try:
-                # Intenta con la antigua API
-                is_required = not element.is_nillable() if hasattr(element, 'is_nillable') else True
-            except:
-                is_required = True
+        # Determinar si el campo es obligatorio
+        is_required = getattr(element, 'min_occurs', 1) > 0
 
         # Campos con enumeraciones (dropdowns)
-        if hasattr(element.type, 'enumeration') and hasattr(element.type.enumeration, '__iter__'):
+        if hasattr(element.type, 'enumeration') and element.type.enumeration:
             try:
-                # Maneja diferentes versiones de la biblioteca xmlschema
-                if hasattr(element.type.enumeration[0], 'value'):
-                    options = [str(e.value) for e in element.type.enumeration]
-                else:
-                    options = [str(e) for e in element.type.enumeration]
-                
+                options = [str(e.value) if hasattr(e, 'value') else str(e) for e in element.type.enumeration]
                 default_idx = 0 if any("Elegir..." in opt for opt in options) else None
                 return st.selectbox(
                     label, 
@@ -122,17 +123,19 @@ def create_input_field(element, path=""):
 
         # Campos de fecha
         elif xsd_type == 'date':
-            return st.date_input(
-                label, 
-                value=datetime.now().date() if is_required else None,
+            return st.text_input(
+                label + " (dd/mm/yyyy)",
+                value=datetime.now().strftime("%d/%m/%Y") if is_required else "",
+                placeholder="dd/mm/yyyy",
                 key=field_id
             )
 
         # Campos de fecha y hora
         elif xsd_type == 'dateTime':
-            return st.datetime_input(
-                label, 
-                value=datetime.now() if is_required else None,
+            return st.text_input(
+                label + " (dd/mm/yyyy hh:mm)",
+                value=datetime.now().strftime("%d/%m/%Y %H:%M") if is_required else "",
+                placeholder="dd/mm/yyyy hh:mm",
                 key=field_id
             )
 
@@ -154,25 +157,26 @@ def create_input_field(element, path=""):
     except Exception as e:
         st.error(f"Error al crear campo para {element.name}: {str(e)}")
         return st.text_input(label if 'label' in locals() else element.name, key=field_id)
-        
+
 def build_form(schema, element, path=""):
     """Construye formulario dinámico basado en XSD"""
     form_data = {}
     current_path = f"{path}_{element.name}" if path else element.name
 
     if element.type.is_complex():
-        # Manejar elementos complejos
         for child in element.type.content_type.iter_elements():
             if child.type.is_simple():
-                form_data[child.name] = create_input_field(child, current_path)
+                value = create_input_field(child, current_path)
+                if value is not None and value != "":
+                    form_data[child.name] = value
             else:
-                # Manejar sub-elementos complejos
                 child_data = build_form(schema, child, current_path)
-                if child_data:  # Solo añadir si hay datos
+                if child_data:
                     form_data[child.name] = child_data
     else:
-        # Manejar elementos simples
-        form_data[element.name] = create_input_field(element, current_path)
+        value = create_input_field(element, current_path)
+        if value is not None and value != "":
+            form_data[element.name] = value
 
     return form_data
 
