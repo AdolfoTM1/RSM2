@@ -18,7 +18,13 @@
             "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/Operaciones_de_locación_de_inmuebles_cuyo_monto_anual_sea_igual_o_superior_a_300_SMVM_v1.0.xsd",
             "descripcion": "Esquema para facturas electrónicas2"
         },
-         {
+        {
+            "nombre": "Operaciones_Efectuadas_con_Monedas_Virtuales",
+            "archivo": "schemas/facturacion3.xsd",
+            "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/config/Operaciones_Efectuadas_con_Monedas_Virtuales_v1.0.xsd",
+            "descripcion": "Esquema para facturas electrónicas3"
+        },
+        {
             "nombre": "Operaciones_Efectuadas_con_Monedas_Virtuales",
             "archivo": "schemas/facturacion3.xsd",
             "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/config/Operaciones_Efectuadas_con_Monedas_Virtuales_v1.0.xsd",
