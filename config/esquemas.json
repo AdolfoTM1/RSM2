@@ -11,10 +11,8 @@
             "archivo": "schemas/facturacion.xsd",
             "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/Operaciones_de_compra_y_o_venta_de_bienes_inmuebles_v1.0.xsd",
             "descripcion": "Esquema para facturas electrónicas"
-        }
-    ]
-}
-{
+        },
+        {
             "nombre": "Operaciones_de_locación_de_inmuebles_cuyo_monto_anual_sea_igual_o_superior_a_300",
             "archivo": "schemas/facturacion2.xsd",
             "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/Operaciones_de_locación_de_inmuebles_cuyo_monto_anual_sea_igual_o_superior_a_300_SMVM_v1.0.xsd",
