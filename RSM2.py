@@ -237,10 +237,20 @@ def main():
                     schema = load_xsd(xsd_source)
                     st.session_state.schema = schema
                     st.session_state.root_element = list(schema.elements.keys())[0]
+                    
+                    # Mostrar atributos requeridos
+                    root_elem = schema.elements[st.session_state.root_element]
+                    if hasattr(root_elem.type, 'attributes'):
+                        required_attrs = [name for name, attr in root_elem.type.attributes.items() 
+                                        if attr.use == 'required']
+                        if required_attrs:
+                            st.info(f"Atributos requeridos detectados: {', '.join(required_attrs)}")
+                    
                     st.success(f"✅ {selected_schema} cargado correctamente")
                 except Exception as e:
                     st.error(f"❌ Error: {str(e)}")
 
+    # Resto del código permanece igual...
     # Panel principal del formulario
     if 'schema' in st.session_state:
         schema = st.session_state.schema
