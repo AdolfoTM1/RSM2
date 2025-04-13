@@ -25,10 +25,10 @@
             "descripcion": "Esquema para facturas electrónicas3"
         },
         {
-            "nombre": "Operaciones_Efectuadas_con_Monedas_Virtuales",
-            "archivo": "schemas/facturacion3.xsd",
-            "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/config/Operaciones_Efectuadas_con_Monedas_Virtuales_v1.0.xsd",
-            "descripcion": "Esquema para facturas electrónicas3"
+            "nombre": "Reporte_de_Registración_y_Cumplimiento_v1.2.xsd",
+            "archivo": "schemas/facturacion4.xsd",
+            "url": "https://raw.githubusercontent.com/AdolfoTM1/RSM2/main/Reporte_de_Registración_y_Cumplimiento_v1.2.xsd",
+            "descripcion": "Esquema para facturas electrónicas4"
         }
     ]
 }
