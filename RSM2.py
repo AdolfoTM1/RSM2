@@ -73,8 +73,9 @@ def create_input_field(element, path=""):
 
     # Campos con enumeraciones (dropdowns)
     if hasattr(element.type, 'enumeration'):
-        options = element.type.enumeration
-        default_idx = 0 if "Elegir..." in options else None
+        # Convertir las enumeraciones a strings
+        options = [str(e.value) for e in element.type.enumeration]
+        default_idx = 0 if any("Elegir..." in opt for opt in options) else None
         return st.selectbox(
             label, 
             options=options,
