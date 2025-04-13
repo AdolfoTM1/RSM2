@@ -156,16 +156,16 @@ def create_input_field(element, path="", parent_element=None):
         st.error(f"Error al crear campo para {element.name}: {str(e)}")
         return st.text_input(label if 'label' in locals() else element.name, key=field_id)
 
-def build_form(schema, element, path="", parent_element=None):
-    """Construye formulario incluyendo campos para atributos requeridos"""
+def build_universal_form(schema, element, path="", parent_element=None):
+    """Construye formulario adaptable a cualquier esquema XSD"""
     form_data = {}
     current_path = f"{path}_{element.name}" if path else element.name
 
-    # Manejar atributos si es el elemento raíz
-    if parent_element is None and hasattr(element.type, 'attributes'):
+    # Manejar atributos requeridos
+    if hasattr(element.type, 'attributes'):
         for attr_name, attr in element.type.attributes.items():
             if attr.use == 'required':
-                # Crear un campo para el atributo (prefijado con @)
+                # Crear campo para el atributo (prefijado con @)
                 attr_field_id = f"{current_path}_@{attr_name}"
                 default_value = attr.fixed if hasattr(attr, 'fixed') else "1.0"
                 
@@ -175,6 +175,7 @@ def build_form(schema, element, path="", parent_element=None):
                 
                 form_data[f"@{attr_name}"] = st.session_state.get(attr_field_id, default_value)
 
+    # Construir campos normales
     if element.type.is_complex():
         for child in element.type.content_type.iter_elements():
             if child.type.is_simple():
@@ -182,7 +183,7 @@ def build_form(schema, element, path="", parent_element=None):
                 if value is not None and value != "":
                     form_data[child.name] = value
             else:
-                child_data = build_form(schema, child, current_path, element)
+                child_data = build_universal_form(schema, child, current_path, element)
                 if child_data:
                     form_data[child.name] = child_data
     else:
@@ -193,13 +194,20 @@ def build_form(schema, element, path="", parent_element=None):
     return form_data
 
 # --- Generación de XML Universal ---
-def generate_xml(schema, root_name, form_data):
-    """Genera XML válido con la estructura exacta que espera el XSD"""
+def generate_universal_xml(schema, root_name, form_data):
+    """Genera XML válido para cualquier esquema XSD"""
     def add_element(parent, name, value, element_def=None):
         if isinstance(value, dict):
             node = SubElement(parent, name)
+            
+            # Primero procesar atributos
             for k, v in value.items():
-                if not k.startswith('@'):  # Ignorar atributos aquí
+                if k.startswith('@'):  # Es un atributo
+                    node.set(k[1:], str(v))
+            
+            # Luego elementos normales
+            for k, v in value.items():
+                if not k.startswith('@'):
                     child_element = schema.elements.get(f"{name}_{k}") if schema else None
                     add_element(node, k, v, child_element)
         else:
@@ -210,35 +218,44 @@ def generate_xml(schema, root_name, form_data):
                 if formatted_value is not None:
                     element.text = formatted_value
 
-    # 1. Crear elemento raíz Operacion con el atributo Version
-    operacion_root = Element("Operacion")
-    operacion_root.set("Version", "1.0")  # Atributo requerido
+    # 1. Analizar el esquema para determinar la estructura requerida
+    root_element = schema.elements[root_name]
     
-    # 2. Crear el elemento principal específico (Operaciones_de_locación...)
-    operaciones_element = SubElement(operacion_root, root_name)
+    # 2. Crear el elemento raíz del tipo específico (Operaciones_de_compra..., etc.)
+    main_root = Element(root_name)
     
-    # 3. Añadir la estructura de Datos_de_la_operaci93n
-    datos_operacion = SubElement(operaciones_element, "Datos_de_la_operaci93n")
+    # 3. Si el esquema espera un envoltorio Operacion, lo creamos
+    needs_operacion_wrapper = any(
+        name.startswith('Operacion') 
+        for name in schema.elements.keys() 
+        if name != root_name
+    )
     
-    # 4. Añadir campos principales dentro de Datos_de_la_operaci93n
-    campos_principales = [
-        'Fecha_de_operaci93n',
-        'Plazo_de_duraci93n_desde',
-        'Plazo_de_duraci93n_hasta',
-        'Tipo_de_moneda_de_origen'
-    ]
+    if needs_operacion_wrapper:
+        # Crear el envoltorio Operacion con atributo Version
+        operacion_root = Element("Operacion")
+        operacion_root.set("Version", "1.0")
+        operacion_root.append(main_root)
+        final_root = operacion_root
+    else:
+        # Si no necesita envoltorio, usar el elemento principal directamente
+        # pero verificar si necesita atributos
+        if hasattr(root_element.type, 'attributes'):
+            for attr_name, attr in root_element.type.attributes.items():
+                if attr.use == 'required':
+                    main_root.set(attr_name, attr.fixed if hasattr(attr, 'fixed') else "1.0")
+        final_root = main_root
     
-    for campo in campos_principales:
-        if campo in form_data:
-            add_element(datos_operacion, campo, form_data[campo])
+    # 4. Añadir el contenido principal del formulario
+    for field, value in form_data.items():
+        if not field.startswith('@'):  # Los atributos ya se manejan aparte
+            schema_element = next(
+                (e for e in root_element.type.content_type.iter_elements()
+                 if e.name == field), None)
+            add_element(main_root, field, value, schema_element)
     
-    # 5. Añadir elementos complejos como IDENTIFICACI98N_DEL_LOCADOR_Y_LOCATARIO
-    if 'IDENTIFICACI98N_DEL_LOCADOR_Y_LOCATARIO' in form_data:
-        identificacion = SubElement(operaciones_element, 'IDENTIFICACI98N_DEL_LOCADOR_Y_LOCATARIO')
-        for id_field, id_value in form_data['IDENTIFICACI98N_DEL_LOCADOR_Y_LOCATARIO'].items():
-            add_element(identificacion, id_field, id_value)
-
-    xml_str = tostring(operacion_root, encoding='unicode')
+    # 5. Generar el XML final
+    xml_str = tostring(final_root, encoding='unicode')
     return minidom.parseString(xml_str).toprettyxml(indent="    ")
 
 # --- Interfaz Principal Mejorada ---
