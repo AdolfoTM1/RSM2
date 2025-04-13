@@ -64,76 +64,84 @@ def load_xsd(xsd_path):
 # --- Generación de Formularios ---
 def create_input_field(element, path=""):
     """Crea campos de entrada según el tipo XSD"""
-    field_id = f"{path}_{element.name}" if path else element.name
-    label = element.name.replace('_', ' ').title()
-    xsd_type = get_element_type(element)
+    try:
+        field_id = f"{path}_{element.name}" if path else element.name
+        label = element.name.replace('_', ' ').title()
+        xsd_type = get_element_type(element)
 
-    # Determinar si el campo es obligatorio
-    is_required = (element.min_occurs is not None and element.min_occurs > 0) or not element.is_nillable()
+        # Determinar si el campo es obligatorio
+        is_required = (element.min_occurs is not None and element.min_occurs > 0) or not element.is_nillable()
 
-    # Campos con enumeraciones (dropdowns)
-    if hasattr(element.type, 'enumeration'):
-        # Convertir las enumeraciones a strings
-        options = [str(e.value) for e in element.type.enumeration]
-        default_idx = 0 if any("Elegir..." in opt for opt in options) else None
-        return st.selectbox(
-            label, 
-            options=options,
-            index=default_idx,
-            key=field_id
-        )
+        # Campos con enumeraciones (dropdowns)
+        if hasattr(element.type, 'enumeration') and element.type.enumeration:
+            try:
+                # Convertir las enumeraciones a strings
+                options = [str(e.value) for e in element.type.enumeration]
+                default_idx = 0 if any("Elegir..." in opt for opt in options) else None
+                return st.selectbox(
+                    label, 
+                    options=options,
+                    index=default_idx,
+                    key=field_id
+                )
+            except Exception as e:
+                st.warning(f"Error al procesar enumeraciones para {label}: {str(e)}")
+                return st.text_input(label, key=field_id)
 
-    # Campos numéricos decimales
-    elif xsd_type in {'decimal', 'float', 'double'}:
-        return st.number_input(
-            label,
-            value=0.0 if is_required else None,
-            step=0.01,
-            format="%.2f",
-            key=field_id
-        )
-    
-    # Campos enteros (long, int)
-    elif xsd_type in {'long', 'int', 'integer'}:
-        return st.number_input(
-            label,
-            value=0 if is_required else None,
-            step=1,
-            key=field_id
-        )
+        # Campos numéricos decimales
+        elif xsd_type in {'decimal', 'float', 'double'}:
+            return st.number_input(
+                label,
+                value=0.0 if is_required else None,
+                step=0.01,
+                format="%.2f",
+                key=field_id
+            )
+        
+        # Campos enteros (long, int)
+        elif xsd_type in {'long', 'int', 'integer'}:
+            return st.number_input(
+                label,
+                value=0 if is_required else None,
+                step=1,
+                key=field_id
+            )
 
-    # Campos de fecha
-    elif xsd_type == 'date':
-        return st.date_input(
-            label, 
-            value=datetime.now().date() if is_required else None,
-            key=field_id
-        )
+        # Campos de fecha
+        elif xsd_type == 'date':
+            return st.date_input(
+                label, 
+                value=datetime.now().date() if is_required else None,
+                key=field_id
+            )
 
-    # Campos de fecha y hora
-    elif xsd_type == 'dateTime':
-        return st.datetime_input(
-            label, 
-            value=datetime.now() if is_required else None,
-            key=field_id
-        )
+        # Campos de fecha y hora
+        elif xsd_type == 'dateTime':
+            return st.datetime_input(
+                label, 
+                value=datetime.now() if is_required else None,
+                key=field_id
+            )
 
-    # Campos booleanos
-    elif xsd_type == 'boolean':
-        return st.checkbox(
-            label, 
-            value=False if is_required else None,
-            key=field_id
-        )
+        # Campos booleanos
+        elif xsd_type == 'boolean':
+            return st.checkbox(
+                label, 
+                value=False if is_required else None,
+                key=field_id
+            )
 
-    # Campos de texto (por defecto)
-    else:
-        return st.text_input(
-            label, 
-            value="" if is_required else None,
-            key=field_id
-        )
-
+        # Campos de texto (por defecto)
+        else:
+            return st.text_input(
+                label, 
+                value="" if is_required else None,
+                key=field_id
+            )
+    except Exception as e:
+        st.error(f"Error al crear campo para {element.name}: {str(e)}")
+        return None
+        
 def build_form(schema, element, path=""):
     """Construye formulario dinámico basado en XSD"""
     form_data = {}
