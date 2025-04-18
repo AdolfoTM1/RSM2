@@ -292,39 +292,36 @@ def main():
                 except Exception as e:
                     st.error(f"❌ Error al cargar esquema: {str(e)}")
 
-    if 'schema' in st.session_state:
-        schema = st.session_state.schema
-        root_element = st.session_state.root_element
+if 'schema' in st.session_state:
+    schema = st.session_state.schema
+    root_element = st.session_state.root_element
 
-        st.subheader(f"Formulario para {selected_schema}")
+    st.subheader(f"Formulario para {selected_schema}")
+    
+    with st.form("xml_form"):
+        form_data = build_universal_form(schema, schema.elements[root_element])
         
-        with st.form("xml_form"):
-            form_data = build_form(schema, schema.elements[root_element])
-            
-            if st.form_submit_button("Generar XML"):
-                try:
-                    xml_content = generate_xml(schema, root_element, form_data)
+        if st.form_submit_button("Generar XML"):
+            try:
+                xml_content = generate_universal_xml(schema, root_element, form_data)
+                
+                # Validación estricta
+                validation_errors = schema.validate(xml_content)
+                if validation_errors is None:
+                    st.success("✅ XML generado y validado correctamente")
                     
-                    # Validación estricta
-                    validation_errors = schema.validate(xml_content)
-                    if validation_errors is None:
-                        st.success("✅ XML generado y validado correctamente")
-                        
-                        with st.expander("Ver XML generado", expanded=True):
-                            st.code(xml_content, language='xml')
-                        
-                        st.download_button(
-                            label="Descargar XML",
-                            data=xml_content,
-                            file_name=f"{selected_schema.lower().replace(' ', '_')}.xml",
-                            mime="application/xml"
-                        )
-                    else:
-                        st.error("❌ Errores de validación encontrados")
-                        for error in validation_errors:
-                            st.warning(f"- {error}")
-                except Exception as e:
-                    st.error(f"❌ Error al generar XML: {str(e)}")
-
-if __name__ == "__main__":
-    main()
+                    with st.expander("Ver XML generado", expanded=True):
+                        st.code(xml_content, language='xml')
+                    
+                    st.download_button(
+                        label="Descargar XML",
+                        data=xml_content,
+                        file_name=f"{selected_schema.lower().replace(' ', '_')}.xml",
+                        mime="application/xml"
+                    )
+                else:
+                    st.error("❌ Errores de validación encontrados")
+                    for error in validation_errors:
+                        st.warning(f"- {error}")
+            except Exception as e:
+                st.error(f"❌ Error al generar XML: {str(e)}")
