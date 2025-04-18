@@ -259,6 +259,8 @@ def generate_universal_xml(schema, root_name, form_data):
     return minidom.parseString(xml_str).toprettyxml(indent="    ")
 
 # --- Interfaz Principal Mejorada ---
+# ... (todo el código anterior permanece igual hasta la parte del main)
+
 def main():
     config = load_config()
     schemas = {s['nombre']: s for s in config['esquemas']}
@@ -301,30 +303,34 @@ def main():
         with st.form("xml_form"):
             form_data = build_universal_form(schema, schema.elements[root_element])
             
-            if st.form_submit_button("Generar XML"):
-                try:
-                    xml_content = generate_universal_xml(schema, root_element, form_data)
+            submit_button = st.form_submit_button("Generar XML")
+        
+        # Mover la generación del XML y el botón de descarga fuera del formulario
+        if submit_button:
+            try:
+                xml_content = generate_universal_xml(schema, root_element, form_data)
+                
+                # Validación estricta
+                validation_errors = schema.validate(xml_content)
+                if validation_errors is None:
+                    st.success("✅ XML generado y validado correctamente")
                     
-                    # Validación estricta
-                    validation_errors = schema.validate(xml_content)
-                    if validation_errors is None:
-                        st.success("✅ XML generado y validado correctamente")
-                        
-                        with st.expander("Ver XML generado", expanded=True):
-                            st.code(xml_content, language='xml')
-                        
-                        st.download_button(
-                            label="Descargar XML",
-                            data=xml_content,
-                            file_name=f"{selected_schema.lower().replace(' ', '_')}.xml",
-                            mime="application/xml"
-                        )
-                    else:
-                        st.error("❌ Errores de validación encontrados")
-                        for error in validation_errors:
-                            st.warning(f"- {error}")
-                except Exception as e:
-                    st.error(f"❌ Error al generar XML: {str(e)}")
+                    with st.expander("Ver XML generado", expanded=True):
+                        st.code(xml_content, language='xml')
+                    
+                    # Botón de descarga ahora fuera del formulario
+                    st.download_button(
+                        label="Descargar XML",
+                        data=xml_content,
+                        file_name=f"{selected_schema.lower().replace(' ', '_')}.xml",
+                        mime="application/xml"
+                    )
+                else:
+                    st.error("❌ Errores de validación encontrados")
+                    for error in validation_errors:
+                        st.warning(f"- {error}")
+            except Exception as e:
+                st.error(f"❌ Error al generar XML: {str(e)}")
 
 if __name__ == "__main__":
     main()
